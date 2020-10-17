@@ -8,54 +8,54 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_width="170dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
         android:text="SZCZEGÓŁY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
-        android:id="@+id/seekBar3"
+        android:id="@+id/seekFundusze"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="230dp"
         android:layout_height="36dp"
         android:max="10"
         android:progress="3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintHorizontal_bias="0.345"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="287dp" />
 
     <SeekBar
-        android:id="@+id/seekBar4"
+        android:id="@+id/seekSztuki"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="229dp"
         android:layout_height="34dp"
         android:max="10"
         android:progress="3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="458dp" />
+        tools:layout_editor_absoluteY="460dp" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnEdycja"
         android:layout_width="121dp"
         android:layout_height="76dp"
         android:text="EDYTUJ"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="596dp" />
+        tools:layout_editor_absoluteX="101dp"
+        tools:layout_editor_absoluteY="575dp" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btnUstaw"
         android:layout_width="134dp"
         android:layout_height="72dp"
         android:text="USTAW"
-        tools:layout_editor_absoluteX="243dp"
-        tools:layout_editor_absoluteY="598dp" />
+        tools:layout_editor_absoluteX="315dp"
+        tools:layout_editor_absoluteY="579dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -76,7 +76,7 @@
         android:text="FUNDUSZE"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="241dp" />
 
@@ -86,45 +86,45 @@
         android:layout_height="39dp"
         android:text="       ILOŚĆ"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="400dp" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="71dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="287dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="66dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="458dp" />
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="404dp" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/btnKategorie"
         android:layout_width="137dp"
         android:layout_height="45dp"
         android:text="KATEGORIE"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="107dp" />
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="148dp" />
 
     <Button
-        android:id="@+id/button9"
-        android:layout_width="134dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="136dp"
-        android:layout_marginRight="136dp"
+        android:id="@+id/btnProdukty"
+        android:layout_width="140dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginRight="96dp"
         android:text="PRODUKTY"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="175dp" />
+        tools:layout_editor_absoluteY="150dp" />
+
+    <EditText
+        android:id="@+id/editTextFundusze"
+        android:layout_width="83dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginRight="72dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="287dp" />
+
+    <EditText
+        android:id="@+id/editTextSztuki"
+        android:layout_width="77dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="370dp"
+        tools:layout_editor_absoluteY="458dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
