@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LimitsActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="SZCZEGÓŁY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seekBar3"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="230dp"
+        android:layout_height="36dp"
+        android:max="10"
+        android:progress="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="287dp" />
+
+    <SeekBar
+        android:id="@+id/seekBar4"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="229dp"
+        android:layout_height="34dp"
+        android:max="10"
+        android:progress="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="458dp" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="121dp"
+        android:layout_height="76dp"
+        android:text="EDYTUJ"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="596dp" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="134dp"
+        android:layout_height="72dp"
+        android:text="USTAW"
+        tools:layout_editor_absoluteX="243dp"
+        tools:layout_editor_absoluteY="598dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="231dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:text="         LIMITY"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="28dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FUNDUSZE"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="241dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="108dp"
+        android:layout_height="39dp"
+        android:text="       ILOŚĆ"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="400dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="71dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="287dp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="66dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="458dp" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="137dp"
+        android:layout_height="45dp"
+        android:text="KATEGORIE"
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="107dp" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="134dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginRight="136dp"
+        android:text="PRODUKTY"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="175dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
