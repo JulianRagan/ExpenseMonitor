@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 public class LimitsActivity extends AppCompatActivity {
 
@@ -23,16 +22,16 @@ public class LimitsActivity extends AppCompatActivity {
                 btn = (Button) this.findViewById(R.id.button);
                 break;
             case "Edytuj":
-                btn = (Button) this.findViewById(R.id.btnEdycja);
+                btn = (Button) this.findViewById(R.id.btnSet);
                 break;
             case "Ustaw":
-                btn = (Button) this.findViewById(R.id.btnUstaw);
-                break;
-            case "Kategorie":
-                btn = (Button) this.findViewById(R.id.btnKategorie);
+                btn = (Button) this.findViewById(R.id.btnCancel);
                 break;
             case "Produkty":
-                btn = (Button) this.findViewById(R.id.btnProdukty);
+                btn = (Button) this.findViewById(R.id.btnAddProduct);
+                break;
+            case "Kategorie":
+                btn = (Button) this.findViewById(R.id.btnAddCategory);
                 break;
         }
         if (btn != null) {
