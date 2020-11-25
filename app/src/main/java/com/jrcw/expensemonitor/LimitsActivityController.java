@@ -21,9 +21,13 @@ public class LimitsActivityController {
     private void initView() {
         try {
             view.getSeekBarByName("Fundusze").setMax(1000);
+            view.getSeekBarByName("Fundusze").setOnSeekBarChangeListener(new FunduszeSeekBarListener());
             view.getSeekBarByName("Sztuki").setMax(100);
+            view.getSeekBarByName("Sztuki").setOnSeekBarChangeListener(new SztukiSeekBarListener());
             view.getEditTextByName("Fundusze").setText("0");
+            view.getEditTextByName("Fundusze").addTextChangedListener(new FunduszeTextChangedListener());
             view.getEditTextByName("Sztuki").setText("0");
+            view.getEditTextByName("Sztuki").addTextChangedListener(new SztukiTextChangedListener());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,10 +79,29 @@ public class LimitsActivityController {
 
         @Override
         public void afterTextChanged(Editable s) {
+            try {
+                SeekBar seekbar= view.getSeekBarByName("Sztuki");
+
+                Integer Wal = Integer.parseInt(s.toString());
+                if (Wal > seekbar.getMax()) {
+                    seekbar.setMax(Wal);
+                }
+                if (Wal >= 0) {
+                    seekbar.setProgress(Wal);
+                }
+
+            }catch (NumberFormatException e) {
+                e.printStackTrace();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         }
     }
     private class FunduszeTextChangedListener implements  TextWatcher {
+
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -92,14 +115,37 @@ public class LimitsActivityController {
 
         @Override
         public void afterTextChanged(Editable s) {
+            try {
+             SeekBar seekbar= view.getSeekBarByName("Fundusze");
 
+            Integer Wal = Integer.parseInt(s.toString());
+            if (Wal > seekbar.getMax()) {
+                seekbar.setMax(Wal);
+            }
+            if (Wal >= 0) {
+                seekbar.setProgress(Wal);
+            }
+
+            }catch (NumberFormatException e) {
+                e.printStackTrace();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     private class FunduszeSeekBarListener implements SeekBar.OnSeekBarChangeListener {
 
+
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+            if (fromUser) {
+                try {
+                    view.getEditTextByName("Fundusze").setText(String.valueOf(progress));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override
@@ -113,11 +159,20 @@ public class LimitsActivityController {
         }
     }
     private class SztukiSeekBarListener implements SeekBar.OnSeekBarChangeListener {
+
+
+
+
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+            if (fromUser) {
+                try {
+                    view.getEditTextByName("Sztuki").setText(String.valueOf(progress));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
