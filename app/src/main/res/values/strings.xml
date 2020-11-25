@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">ExpenseMonitor</string>
+    <string name="lblWprowadzWydatki">Wprowadź wydatki</string>
+    <string name="lblData">Data</string>
+    <string name="lblGodzina">Godzina</string>
+    <string name="lblMiejsce">Miejsce</string>
+    <string name="btnAdd">Dodaj</string>
+    <string name="hintEditDate">Wprowadź datę</string>
+    <string name="hintEditTime">Wprowadź godzinę</string>
+    <string name="lblKategoria">Kategoria</string>
+    <string name="lblOpis">Opis</string>
+    <string name="hintDescription">Podaj opis</string>
+    <string name="btnAddExpense">Dodaj wydatek</string>
+    <string name="btnEnterDetail">Wprowadź szczegóły</string>
+    <string name="lblAmount">Kwota</string>
+    <string name="hintEnterAmount">Wprowadź kwotę zakupu</string>
+    <string name="lblDescription">Opis</string>
 </resources>
