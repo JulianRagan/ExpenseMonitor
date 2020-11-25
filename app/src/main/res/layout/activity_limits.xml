@@ -6,13 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".LimitsActivity">
 
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="136dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="195dp" />
+
+    <Button
+        android:id="@+id/btnKategorie3"
+        android:layout_width="137dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginLeft="137dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:text="DODAJ"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.995"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.493" />
+
+    <Button
+        android:id="@+id/btnKategorie2"
+        android:layout_width="137dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginLeft="137dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="100dp"
+        android:text="DODAJ"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.995"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/button"
-        android:layout_width="170dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
+        android:layout_width="136dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:text="SZCZEGÓŁY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,40 +67,48 @@
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="230dp"
         android:layout_height="36dp"
+        android:layout_marginTop="22dp"
         android:max="10"
         android:progress="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.345"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="287dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <SeekBar
         android:id="@+id/seekSztuki"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="229dp"
-        android:layout_height="34dp"
+        android:layout_width="230dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="22dp"
         android:max="10"
         android:progress="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="460dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
         android:id="@+id/btnEdycja"
-        android:layout_width="121dp"
-        android:layout_height="76dp"
+        android:layout_width="152dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="64dp"
         android:text="EDYTUJ"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="575dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekSztuki" />
 
     <Button
         android:id="@+id/btnUstaw"
-        android:layout_width="134dp"
-        android:layout_height="72dp"
+        android:layout_width="155dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="USTAW"
-        tools:layout_editor_absoluteX="315dp"
-        tools:layout_editor_absoluteY="579dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSztuki" />
 
     <TextView
         android:id="@+id/textView2"
@@ -73,6 +126,10 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="137dp"
+        android:layout_marginLeft="137dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginRight="137dp"
         android:text="FUNDUSZE"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,47 +141,59 @@
         android:id="@+id/textView4"
         android:layout_width="108dp"
         android:layout_height="39dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginLeft="137dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginRight="137dp"
         android:text="       ILOŚĆ"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="185dp"
-        tools:layout_editor_absoluteY="404dp" />
-
-    <Button
-        android:id="@+id/btnKategorie"
-        android:layout_width="137dp"
-        android:layout_height="45dp"
-        android:text="KATEGORIE"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="148dp" />
-
-    <Button
-        android:id="@+id/btnProdukty"
-        android:layout_width="140dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginRight="96dp"
-        android:text="PRODUKTY"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="150dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekFundusze" />
 
     <EditText
         android:id="@+id/editTextFundusze"
         android:layout_width="83dp"
         android:layout_height="41dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginRight="72dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:ems="10"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="287dp" />
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <EditText
         android:id="@+id/editTextSztuki"
-        android:layout_width="77dp"
-        android:layout_height="40dp"
+        android:layout_width="83dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="144dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:ems="10"
         android:inputType="number"
-        tools:layout_editor_absoluteX="370dp"
-        tools:layout_editor_absoluteY="458dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFundusze" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="44dp"
+        android:text="Tylko KAT"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_editor_absoluteX="28dp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="136dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="116dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
