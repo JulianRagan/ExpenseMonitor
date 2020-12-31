@@ -13,14 +13,13 @@ public class LimitsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_limits);
+        new LimitsActivityController(this, new LimitsActivityModel());
     }
 
     public Button getButtonByName(String name) throws Exception {
         Button btn = null;
         switch (name) {
-            case "Szczegoly":
-                btn = (Button) this.findViewById(R.id.button);
-                break;
+
             case "Edytuj":
                 btn = (Button) this.findViewById(R.id.btnSet);
                 break;
@@ -45,11 +44,15 @@ public class LimitsActivity extends AppCompatActivity {
         EditText txt = null;
         switch (name) {
             case "Fundusze":
-                txt = (EditText) this.findViewById(R.id.editTextFundusze);
+                txt = (EditText) this.findViewById(R.id.etFunds);
                 break;
             case "Sztuki":
-                txt = (EditText) this.findViewById(R.id.editTextSztuki);
+                txt = (EditText) this.findViewById(R.id.etQuantity);
                 break;
+            case "DataOd":
+                txt = (EditText) this.findViewById(R.id.etFrom);
+            case "DateDo":
+                txt = (EditText) this.findViewById(R.id.etTo);
         }
         if (txt != null) {
             return txt;
@@ -76,6 +79,7 @@ public class LimitsActivity extends AppCompatActivity {
         }
 
     }
+
 }
 
 

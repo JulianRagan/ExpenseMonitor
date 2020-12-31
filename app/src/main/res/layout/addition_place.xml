@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button28"
+        android:layout_width="148dp"
+        android:layout_height="87dp"
+        android:text="Dodaj"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="574dp" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="270dp"
+        android:layout_height="43dp"
+        android:text="Miasto"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="401dp" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="270dp"
+        android:layout_height="43dp"
+        android:text="Kraj"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="473dp" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="270dp"
+        android:layout_height="43dp"
+        android:text="Numer"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="326dp" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="270dp"
+        android:layout_height="43dp"
+        android:text="Ulica"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="252dp" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="268dp"
+        android:layout_height="86dp"
+        android:text="Opis"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="127dp" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="270dp"
+        android:layout_height="43dp"
+        android:text="Nazwa"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="57dp" />
+
+    <Button
+        android:id="@+id/button27"
+        android:layout_width="148dp"
+        android:layout_height="87dp"
+        android:text="Anuluj"
+        tools:layout_editor_absoluteX="226dp"
+        tools:layout_editor_absoluteY="574dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
