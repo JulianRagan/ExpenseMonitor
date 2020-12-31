@@ -1,10 +1,17 @@
 package com.jrcw.expensemonitor;
 
 import android.app.SearchManager;
+import android.icu.util.LocaleData;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.SeekBar;
+
+import java.sql.Date;
+import java.time.LocalDate;
 
 public class LimitsActivityController {
 
@@ -20,6 +27,8 @@ public class LimitsActivityController {
 
     private void initView() {
         try {
+            view.getEditTextByName("DateOd").setOnClickListener(new OdEditTextListener());
+            view.getEditTextByName("DateDo").setOnClickListener(new DoEditTextListener());
             view.getSeekBarByName("Fundusze").setMax(1000);
             view.getSeekBarByName("Fundusze").setOnSeekBarChangeListener(new FunduszeSeekBarListener());
             view.getSeekBarByName("Sztuki").setMax(100);
@@ -28,6 +37,8 @@ public class LimitsActivityController {
             view.getEditTextByName("Fundusze").addTextChangedListener(new FunduszeTextChangedListener());
             view.getEditTextByName("Sztuki").setText("0");
             view.getEditTextByName("Sztuki").addTextChangedListener(new SztukiTextChangedListener());
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,7 +100,7 @@ public class LimitsActivityController {
                 if (Wal >= 0) {
                     seekbar.setProgress(Wal);
                 }
-
+                model.setQuantity(Wal);
             }catch (NumberFormatException e) {
                 e.printStackTrace();
 
@@ -125,7 +136,7 @@ public class LimitsActivityController {
             if (Wal >= 0) {
                 seekbar.setProgress(Wal);
             }
-
+            model.setFunds(Wal);
             }catch (NumberFormatException e) {
                 e.printStackTrace();
 
@@ -142,7 +153,9 @@ public class LimitsActivityController {
             if (fromUser) {
                 try {
                     view.getEditTextByName("Fundusze").setText(String.valueOf(progress));
+                    model.setFunds(progress);
                 } catch (Exception e) {
+
                     e.printStackTrace();
                 }
             }
@@ -168,6 +181,7 @@ public class LimitsActivityController {
             if (fromUser) {
                 try {
                     view.getEditTextByName("Sztuki").setText(String.valueOf(progress));
+                    model.setQuantity(progress);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -181,6 +195,45 @@ public class LimitsActivityController {
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
 
+        }
+    }
+    private class OdEditTextListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            try {
+                String txt = view.getEditTextByName("DataOd").getText().toString();
+                Date OD = Date.valueOf(txt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    private class DoEditTextListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            try {
+                String txt = view.getEditTextByName("DataDo").getText().toString();
+                Date DO = Date.valueOf(txt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private class CheckBoxListener implements View.OnClickListener {
+
+        private Object CompoundButton;
+
+        @Override
+        public void onClick(View v) {
+            if ((CompoundButton) view).isChecked(){
+
+            }
+        }
+
+        private void isChecked() {
         }
     }
 }
