@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button26"
+        android:layout_width="142dp"
+        android:layout_height="65dp"
+        android:text="Anuluj"
+        tools:layout_editor_absoluteX="216dp"
+        tools:layout_editor_absoluteY="517dp" />
+
+    <Button
+        android:id="@+id/button25"
+        android:layout_width="142dp"
+        android:layout_height="65dp"
+        android:text="Ustaw"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="517dp" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="324dp"
+        android:layout_height="290dp"
+        android:text="Notatka"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="188dp" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="96dp"
+        android:layout_height="46dp"
+        android:text="15"
+        tools:layout_editor_absoluteX="266dp"
+        tools:layout_editor_absoluteY="117dp" />
+
+    <Button
+        android:id="@+id/button24"
+        android:layout_width="142dp"
+        android:layout_height="65dp"
+        android:text="Dzień/Godzina"
+        tools:layout_editor_absoluteX="222dp"
+        tools:layout_editor_absoluteY="37dp" />
+
+    <Button
+        android:id="@+id/button23"
+        android:layout_width="142dp"
+        android:layout_height="65dp"
+        android:text="Cyklicznie"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="37dp" />
+
+    <Spinner
+        android:id="@+id/spinner10"
+        android:layout_width="199dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="115dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

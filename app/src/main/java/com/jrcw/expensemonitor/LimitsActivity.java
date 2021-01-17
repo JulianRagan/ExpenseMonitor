@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 public class LimitsActivity extends AppCompatActivity {
 
@@ -14,25 +13,24 @@ public class LimitsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_limits);
+        new LimitsActivityController(this, new LimitsActivityModel());
     }
 
     public Button getButtonByName(String name) throws Exception {
         Button btn = null;
         switch (name) {
-            case "Szczegoly":
-                btn = (Button) this.findViewById(R.id.button);
-                break;
+
             case "Edytuj":
-                btn = (Button) this.findViewById(R.id.btnEdycja);
+                btn = (Button) this.findViewById(R.id.btnSet);
                 break;
             case "Ustaw":
-                btn = (Button) this.findViewById(R.id.btnUstaw);
-                break;
-            case "Kategorie":
-                btn = (Button) this.findViewById(R.id.btnKategorie);
+                btn = (Button) this.findViewById(R.id.btnCancel);
                 break;
             case "Produkty":
-                btn = (Button) this.findViewById(R.id.btnProdukty);
+                btn = (Button) this.findViewById(R.id.btnAddProduct);
+                break;
+            case "Kategorie":
+                btn = (Button) this.findViewById(R.id.btnAddCategory);
                 break;
         }
         if (btn != null) {
@@ -46,11 +44,15 @@ public class LimitsActivity extends AppCompatActivity {
         EditText txt = null;
         switch (name) {
             case "Fundusze":
-                txt = (EditText) this.findViewById(R.id.editTextFundusze);
+                txt = (EditText) this.findViewById(R.id.etFunds);
                 break;
             case "Sztuki":
-                txt = (EditText) this.findViewById(R.id.editTextSztuki);
+                txt = (EditText) this.findViewById(R.id.etQuantity);
                 break;
+            case "DataOd":
+                txt = (EditText) this.findViewById(R.id.etFrom);
+            case "DateDo":
+                txt = (EditText) this.findViewById(R.id.etTo);
         }
         if (txt != null) {
             return txt;
@@ -77,6 +79,7 @@ public class LimitsActivity extends AppCompatActivity {
         }
 
     }
+
 }
 
 

@@ -19,4 +19,14 @@
     <string name="menuExpenses">Wydatki</string>
     <string name="menuStatistics">Statystyka</string>
     <string name="menuLimits">Ograniczenia wydatków</string>
+    <string name="btnCancel">Anuluj</string>
+    <string name="btnSet">Ustaw</string>
+    <string name="lblLimits">LIMITY</string>
+    <string name="lblFunds">Fundusze</string>
+    <string name="lvlVolume">Ilość</string>
+    <string name="hintFunds">Wprowadź kwote</string>
+    <string name="hintQuantity">Wprowadź ilość</string>
+    <string name="ckbCategory">Tylko kat</string>
+    <string name="hintTo">Do</string>
+    <string name="hintFrom">OD</string>
 </resources>
