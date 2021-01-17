@@ -15,4 +15,8 @@
     <string name="lblAmount">Kwota</string>
     <string name="hintEnterAmount">Wprowadź kwotę zakupu</string>
     <string name="lblDescription">Opis</string>
+    <string name="btnFunction">Wybierz funkcje</string>
+    <string name="menuExpenses">Wydatki</string>
+    <string name="menuStatistics">Statystyka</string>
+    <string name="menuLimits">Ograniczenia wydatków</string>
 </resources>
