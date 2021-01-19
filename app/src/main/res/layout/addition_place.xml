@@ -1,77 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tvCountryPlace"
+        android:layout_width="268dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/lblCountryPlace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCityPlace" />
+
+    <TextView
+        android:id="@+id/tvCityPlace"
+        android:layout_width="268dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/lblCityPlace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNumberPlace" />
+
+    <TextView
+        android:id="@+id/tvNumberPlace"
+        android:layout_width="268dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/lblNumberPlace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRoadPlace" />
+
+    <TextView
+        android:id="@+id/tvRoadPlace"
+        android:layout_width="268dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/lblRoadPlace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddDescriptionPlace" />
+
+    <TextView
+        android:id="@+id/tvAddPlace"
+        android:layout_width="268dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/lblAddPlace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        android:id="@+id/button28"
+        android:id="@+id/btnAddAdditionPlace"
         android:layout_width="148dp"
         android:layout_height="87dp"
-        android:text="Dodaj"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="574dp" />
+        android:layout_marginStart="37dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:text="@string/btnAddAdditionPlace"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancelAdditionPlace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCountryPlace" />
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/txtCityPlace"
         android:layout_width="270dp"
         android:layout_height="43dp"
-        android:text="Miasto"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginRight="79dp"
+        android:hint="@string/hintCityPlace"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="401dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCityPlace" />
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/txtCountryPlace"
         android:layout_width="270dp"
         android:layout_height="43dp"
-        android:text="Kraj"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginRight="79dp"
+        android:hint="@string/hintCountryPlace"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="473dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountryPlace" />
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/txtNumberPlace"
         android:layout_width="270dp"
         android:layout_height="43dp"
-        android:text="Numer"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginRight="79dp"
+        android:hint="@string/hintNumberPlace"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="326dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberPlace" />
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/txtRoadPlace"
         android:layout_width="270dp"
         android:layout_height="43dp"
-        android:text="Ulica"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginRight="79dp"
+        android:hint="@string/hintRoadPlace"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="252dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRoadPlace" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/txtAddDescriptionPlace"
         android:layout_width="268dp"
         android:layout_height="86dp"
-        android:text="Opis"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginRight="81dp"
+        android:hint="@string/hintDescriptionPlace"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="127dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPlace" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/txtNamePlace"
         android:layout_width="270dp"
         android:layout_height="43dp"
-        android:text="Nazwa"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginRight="79dp"
+        android:hint="@string/hintNamePlace"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="57dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddPlace" />
 
     <Button
-        android:id="@+id/button27"
+        android:id="@+id/btnCancelAdditionPlace"
         android:layout_width="148dp"
         android:layout_height="87dp"
-        android:text="Anuluj"
-        tools:layout_editor_absoluteX="226dp"
-        tools:layout_editor_absoluteY="574dp" />
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginRight="37dp"
+        android:text="@string/btnCancelAdditionPlace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAddAdditionPlace"
+        app:layout_constraintTop_toBottomOf="@+id/txtCountryPlace" />
+
+    <TextView
+        android:id="@+id/tvDescriptionPlace"
+        android:layout_width="268dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginLeft="63dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:text="@string/lblAddDescriptionPlace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNamePlace" />
 </androidx.constraintlayout.widget.ConstraintLayout>
