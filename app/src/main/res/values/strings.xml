@@ -29,4 +29,6 @@
     <string name="ckbCategory">Tylko kat</string>
     <string name="hintTo">Do</string>
     <string name="hintFrom">OD</string>
+    <string name="lblName">Nazwa</string>
+    <string name="hintCategory">Podaj nazwę kategorii</string>
 </resources>

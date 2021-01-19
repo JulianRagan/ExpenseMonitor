@@ -223,17 +223,12 @@ public class LimitsActivityController {
         }
     }
     private class CheckBoxListener implements View.OnClickListener {
-
-        private Object CompoundButton;
-
         @Override
         public void onClick(View v) {
-            if ((CompoundButton) view).isChecked(){
+            CompoundButton btn = (CompoundButton)view.findViewById(R.id.ckbCategory);
+            if (btn.isChecked()){
 
             }
-        }
-
-        private void isChecked() {
         }
     }
 }

@@ -2,6 +2,7 @@ package com.jrcw.expensemonitor;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.widget.PopupMenu;
+
+import com.jrcw.expensemonitor.db.DatabaseAccess;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 
 public class ExpenseEntryController {
@@ -35,6 +40,21 @@ public class ExpenseEntryController {
         ((Spinner)view.findViewById(R.id.spPlace)).setOnItemSelectedListener(new PlaceSelectedItemListener());
         ((Spinner)view.findViewById(R.id.spCategory)).setOnItemSelectedListener(new CategorySelectedItemListener());
         ((Spinner)view.findViewById(R.id.spCurrency)).setOnItemSelectedListener(new CurrencySelectedItemListener());
+    }
+
+    private void showPopupWindow(PopupWindowType pwt){
+        LayoutInflater inflater = (LayoutInflater) view.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View pview = null;
+        switch(pwt){
+            case PLACE:
+                pview = inflater.inflate(R.layout.addition_place, null);
+                break;
+            case CATEGORY:
+                pview = inflater.inflate(R.layout.addition_category, null);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + pwt);
+        }
     }
 
     public void showPopup(View v, ExpenseEntryActivity view){
