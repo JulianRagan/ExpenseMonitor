@@ -2,33 +2,37 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tvDateProduct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LimitsActivity">
 
     <EditText
         android:id="@+id/etTo"
-        android:layout_width="154dp"
+        android:layout_width="0dp"
         android:layout_height="57dp"
-        android:layout_marginStart="228dp"
-        android:layout_marginLeft="228dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:ems="10"
         android:hint="@string/hintTo"
         android:importantForAutofill="no"
         android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekSztuki" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etFrom"
+        app:layout_constraintTop_toBottomOf="@+id/etQuantity" />
 
     <Spinner
         android:id="@+id/spProduct"
         android:layout_width="136dp"
         android:layout_height="36dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spCategory" />
 
@@ -45,9 +49,10 @@
         android:text="@string/btnAdd"
         app:layout_constraintBottom_toTopOf="@+id/spCategory"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.995"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.48" />
 
     <Button
         android:id="@+id/btnAddCategory"
@@ -55,12 +60,12 @@
         android:layout_height="45dp"
         android:layout_marginStart="137dp"
         android:layout_marginLeft="137dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:text="@string/btnAdd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.995"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,49 +97,58 @@
 
     <Button
         android:id="@+id/btnSet"
-        android:layout_width="155dp"
-        android:layout_height="97dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="124dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:text="@string/btnSet"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekSztuki" />
+        app:layout_constraintTop_toBottomOf="@+id/etFrom" />
 
     <Button
         android:id="@+id/btnCancel"
-        android:layout_width="155dp"
-        android:layout_height="97dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:text="@string/btnCancel"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/btnDateProduct"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekSztuki" />
+        app:layout_constraintStart_toEndOf="@+id/btnSet"
+        app:layout_constraintTop_toBottomOf="@+id/etTo" />
 
     <TextView
-        android:id="@+id/lblLimits"
-        android:layout_width="231dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="16dp"
+        android:id="@+id/tvLimits"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical"
         android:text="@string/lblLimits"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblFunds"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="137dp"
-        android:layout_marginLeft="137dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="137dp"
-        android:layout_marginRight="137dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:text="@string/lblFunds"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,13 +158,13 @@
 
     <TextView
         android:id="@+id/lblVolume"
-        android:layout_width="108dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="137dp"
-        android:layout_marginLeft="137dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="137dp"
-        android:layout_marginRight="137dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:text="@string/lvlVolume"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +176,9 @@
         android:id="@+id/etFunds"
         android:layout_width="83dp"
         android:layout_height="41dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:autofillHints="no"
@@ -170,13 +186,17 @@
         android:hint="@string/hintFunds"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/seekFundusze"
         app:layout_constraintTop_toBottomOf="@+id/btnAddProduct" />
 
     <EditText
         android:id="@+id/etQuantity"
         android:layout_width="83dp"
         android:layout_height="41dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:autofillHints="no"
@@ -184,43 +204,94 @@
         android:hint="@string/hintQuantity"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFunds" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/seekSztuki"
+        app:layout_constraintTop_toBottomOf="@+id/lblVolume" />
 
     <CheckBox
         android:id="@+id/ckbCategory"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/ckbCategory"
+        app:layout_constraintEnd_toStartOf="@+id/spCategory"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblLimits" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDateProductLimits" />
 
     <Spinner
         android:id="@+id/spCategory"
         android:layout_width="136dp"
         android:layout_height="36dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblLimits" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLimits" />
 
     <EditText
         android:id="@+id/etFrom"
-        android:layout_width="155dp"
+        android:layout_width="0dp"
         android:layout_height="57dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:ems="10"
         android:hint="@string/hintFrom"
         android:importantForAutofill="no"
         android:inputType="date"
+        app:layout_constraintEnd_toStartOf="@+id/etTo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekSztuki" />
+
+    <TextView
+        android:id="@+id/tvDateProductLimits"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/lvDateProduct"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLimits" />
+
+    <TextView
+        android:id="@+id/tvCategoryProductLimits"
+        android:layout_width="396dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/lvlCategoryPorductLimit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDateProductLimits" />
+
+    <TextView
+        android:id="@+id/tvChooseProductLimit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/lblChooseProductLimit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spCategory" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,7 +23,7 @@
         app:layout_constraintStart_toEndOf="@+id/editTextDate"
         app:layout_constraintTop_toBottomOf="@+id/tvHour" />
 
-    <EditText
+     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="0dp"
         android:layout_height="40dp"
@@ -269,5 +269,5 @@
         app:layout_constraintEnd_toEndOf="@+id/tvDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+  
 </androidx.constraintlayout.widget.ConstraintLayout>
