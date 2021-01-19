@@ -9,7 +9,7 @@
     <Button
         android:id="@+id/btnAdditionProduct"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
@@ -80,7 +80,7 @@
     <Button
         android:id="@+id/btnCancelProduct"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
