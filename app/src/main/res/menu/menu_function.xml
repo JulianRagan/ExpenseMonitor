@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuExpenses"
+        android:title="@string/menuExpenses" />
+    <item
+        android:id="@+id/menuLimits"
+        android:title="@string/menuLimits" />
+    <item
+        android:id="@+id/menuStatistics"
+        android:title="@string/menuStatistics" />
+</menu>
