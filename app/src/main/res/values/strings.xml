@@ -29,6 +29,8 @@
     <string name="ckbCategory">Tylko kat</string>
     <string name="hintTo">Do</string>
     <string name="hintFrom">OD</string>
+    <string name="lblName">Nazwa</string>
+    <string name="hintCategory">Podaj nazwę kategorii</string>
     <string name="hintProductName">Wprowadź nazwę produktu</string>
     <string name="lblChooseCategory">Wybierz categorię</string>
     <string name="lblDescriptionProducts">Opis produktu</string>

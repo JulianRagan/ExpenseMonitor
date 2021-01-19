@@ -3,7 +3,18 @@ package com.jrcw.expensemonitor.db;
 public class DBQueries {
 
     public static String populateDatabase(){
-        return "";
+        return "INSERT INTO Category (id, Name, Description) VALUES (1, 'Żywność', 'Artykuły spo" +
+                "żywcze'), (2, 'Kosmetyki', 'Kosmetyki'), (3, 'Higieniczne', 'Artykuły do higien" +
+                "y osobistej');\n" +
+                "INSERT INTO UnitOfMeasure (id, Description, Abbreviation) VALUES (1, 'Metr', 'm" +
+                "'), (2, 'Metr kwadratowy', 'm2'), (3, 'Metr sześcienny', 'm3'), (4, 'Sztuka', '" +
+                "szt.'), (5, 'Litr', 'l'), (6, 'Kilogram', 'kg');\n" +
+                "INSERT INTO Currency (id, Name, ISOCode, ExchangeRate) VALUES (1, 'Polski złoty" +
+                "', 'PLN' '1.000');\n" +
+                "INSERT INTO LimitMode (id, Type) VALUES (1, 'Sztukowy'), (2, 'Kwotowy');\n" +
+                "INSERT INTO Preferences (DefaultEntryDelay, DefaultCurrency_id, DefaultExchange" +
+                "Rate, DefaultMaxForQuotaSlider, DefaultMaxForQuantitySlider) VALUES ('00:15:00'" +
+                ", 1, '1.000', 5000, 100);";
     }
     public static String createDataBase(){
         return "CREATE TABLE Category (\n" +
@@ -79,8 +90,8 @@ public class DBQueries {
                 "    DefaultEntryDelay TIME NOT NULL,\n" +
                 "    DefaultCurrency_id INTEGER NOT NULL,\n" +
                 "    DefaultExchangeRate DECIMAL(10,3) NOT NULL,\n" +
-                "    DefaultMaxForQuotaSlider DECIMAL(10,2) NOT NULL,\n" +
-                "    DefaultMaxForQuantitySlider DECIMAL(10,3) NOT NULL,\n" +
+                "    DefaultMaxForQuotaSlider INTEGER NOT NULL,\n" +
+                "    DefaultMaxForQuantitySlider INTEGER NOT NULL,\n" +
                 "    FOREIGN KEY(DefaultCurrency_id) REFERENCES Currency(id)\n" +
                 ");\n" +
                 "\n" +
