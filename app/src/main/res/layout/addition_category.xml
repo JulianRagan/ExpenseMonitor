@@ -1,42 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/btnCancelAddCategory"
         android:layout_width="147dp"
         android:layout_height="68dp"
-        android:text="Anuluj/Odrzuć"
-        tools:layout_editor_absoluteX="208dp"
-        tools:layout_editor_absoluteY="535dp" />
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:text="@string/btnCancelAddCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAdditionNewCategory"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescriptionCategory" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/txtDescriptionCategory"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:text="Opis"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginRight="75dp"
+        android:text="@string/txtDescriptionNameCategory"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="471dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionCategory" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/txtNameCategory"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:text="Nazwa"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginRight="75dp"
+        android:text="@string/txtNameCategory"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="403dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameCategory" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/btnAdditionNewCategory"
         android:layout_width="147dp"
         android:layout_height="68dp"
-        android:text="Dodaj/Zachowaj"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="535dp" />
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:text="@string/btnAdditionNewCategory"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancelAddCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescriptionCategory" />
+
+    <TextView
+        android:id="@+id/tvNameCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="368dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/lblNmeCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDescriptionCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/lblDescriptionCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNameCategory" />
 </androidx.constraintlayout.widget.ConstraintLayout>
