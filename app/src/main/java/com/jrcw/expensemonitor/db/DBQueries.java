@@ -2,6 +2,10 @@ package com.jrcw.expensemonitor.db;
 
 public class DBQueries {
 
+    public static String qryGetAllFrom(String tableName){
+        return "SELECT * FROM " + tableName + ";";
+    }
+
     public static String populateDatabase(){
         return "INSERT INTO Category (id, Name, Description) VALUES (1, 'Żywność', 'Artykuły spo" +
                 "żywcze'), (2, 'Kosmetyki', 'Kosmetyki'), (3, 'Higieniczne', 'Artykuły do higien" +

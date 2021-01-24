@@ -15,8 +15,7 @@ public class ExpenseEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenseentry);
-        DatabaseAccess dba = new DatabaseAccess(this);
-        ExpenseEntryModel model = new ExpenseEntryModel(dba);
+        ExpenseEntryModel model = new ExpenseEntryModel(this);
         new ExpenseEntryController(this, model);
 
     }
