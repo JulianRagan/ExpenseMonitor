@@ -1,9 +1,11 @@
 package com.jrcw.expensemonitor.popupWindows;
 
+import android.content.Context;
+
 import com.jrcw.expensemonitor.db.DatabaseAccess;
 
 public class AddPlacePopupModel {
-    private DatabaseAccess dba;
+    DatabaseAccess dba;
     private String name;
     private String description;
     private String street;
@@ -11,8 +13,8 @@ public class AddPlacePopupModel {
     private String country;
     private String number;
 
-    public AddPlacePopupModel(DatabaseAccess dba){
-        this.dba = dba;
+    public AddPlacePopupModel(Context c){
+        dba = new DatabaseAccess(c);
     }
 
     public void setName(String name) {

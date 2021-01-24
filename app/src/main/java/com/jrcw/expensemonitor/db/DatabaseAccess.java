@@ -26,7 +26,6 @@ public class DatabaseAccess {
 
     public Cursor fetchAny(String qry){
         Cursor c = database.rawQuery(qry, null);
-        c.moveToFirst();
         return c;
     }
 
