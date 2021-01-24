@@ -7,46 +7,59 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/tvLimitExceeded"
         android:layout_width="282dp"
         android:layout_height="65dp"
-        android:text="Przekroczyłeś limit"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="209dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginRight="65dp"
+        android:text="@string/lblLimitExceeded"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="209dp" />
-
-    <Button
-        android:id="@+id/button29"
-        android:layout_width="125dp"
-        android:layout_height="82dp"
-        android:text="OK"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="514dp" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLimitExceededOK"
+        android:layout_width="125dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/btnLimitExceededOK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLimitExceededReason" />
 
     <TextView
-        android:id="@+id/textView29"
-        android:layout_width="193dp"
+        android:id="@+id/tvLimitExceededOn"
+        android:layout_width="0dp"
         android:layout_height="51dp"
-        android:text="Przekroczyłeś limit na:"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginRight="65dp"
+        android:text="@string/lblLimitExceededOn"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="287dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLimitExceeded" />
 
     <TextView
-        android:id="@+id/textView31"
-        android:layout_width="63dp"
-        android:layout_height="51dp"
-        android:text="........"
-        tools:layout_editor_absoluteX="262dp"
-        tools:layout_editor_absoluteY="289dp" />
-
-    <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/txtLimitExceededReason"
         android:layout_width="282dp"
         android:layout_height="156dp"
-        android:text="Przyczyna"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginRight="65dp"
+        android:hint="@string/hintLimitExceededReason"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="353dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLimitExceededOn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
