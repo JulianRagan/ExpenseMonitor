@@ -20,7 +20,7 @@
         app:layout_constraintStart_toEndOf="@+id/btnAdditionNewCategory"
         app:layout_constraintTop_toBottomOf="@+id/txtDescriptionCategory" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtDescriptionCategory"
         android:layout_width="300dp"
         android:layout_height="40dp"
@@ -29,13 +29,13 @@
         android:layout_marginTop="9dp"
         android:layout_marginEnd="75dp"
         android:layout_marginRight="75dp"
-        android:text="@string/txtDescriptionNameCategory"
+        android:hint="@string/txtDescriptionNameCategory"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDescriptionCategory" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtNameCategory"
         android:layout_width="300dp"
         android:layout_height="40dp"
@@ -44,7 +44,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="75dp"
         android:layout_marginRight="75dp"
-        android:text="@string/txtNameCategory"
+        android:hint="@string/txtNameCategory"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

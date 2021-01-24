@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCountryPlace" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtCityPlace"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -90,7 +90,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCityPlace" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtCountryPlace"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -105,7 +105,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCountryPlace" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtNumberPlace"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -120,7 +120,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNumberPlace" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtRoadPlace"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -136,7 +136,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvRoadPlace" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtAddDescriptionPlace"
         android:layout_width="0dp"
         android:layout_height="96dp"
@@ -152,7 +152,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPlace" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtNamePlace"
         android:layout_width="0dp"
         android:layout_height="48dp"

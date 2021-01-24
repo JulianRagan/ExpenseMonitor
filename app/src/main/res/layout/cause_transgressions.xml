@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLimitExceeded" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtLimitExceededReason"
         android:layout_width="282dp"
         android:layout_height="156dp"

@@ -34,7 +34,7 @@
         app:layout_constraintStart_toEndOf="@+id/btnSetReminderSettings"
         app:layout_constraintTop_toBottomOf="@+id/txtNoteReminderSettings" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtNoteReminderSettings"
         android:layout_width="326dp"
         android:layout_height="264dp"
