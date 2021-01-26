@@ -3,6 +3,7 @@ package com.jrcw.expensemonitor.popupWindows;
 import android.content.Context;
 
 import com.jrcw.expensemonitor.db.DatabaseAccess;
+import com.jrcw.expensemonitor.db.InsertBuilder;
 
 public class AddPlacePopupModel {
     DatabaseAccess dba;
@@ -51,6 +52,38 @@ public class AddPlacePopupModel {
     }
 
     public void storePlace(){
-        //TODO dodać zapis danych
+        dba.open();
+        try{
+            InsertBuilder ib = new InsertBuilder("Place", "Name", name, null);
+            if(description != null) {
+                if (!description.contentEquals("")) {
+                    ib.addFieldAndData("Description", description, null);
+                }
+            }
+            if(street != null) {
+                if (!street.contentEquals("")) {
+                    ib.addFieldAndData("StreetName", street, null);
+                }
+            }
+            if(number != null){
+                if(!number.contentEquals("")){
+                    ib.addFieldAndData("StreetNumber", number, null);
+                }
+            }
+            if(city != null){
+                if(!city.contentEquals("")){
+                    ib.addFieldAndData("CityName", city, null);
+                }
+            }
+            if(country != null){
+                if(!country.contentEquals("")){
+                    ib.addFieldAndData("CountryName", country, null);
+                }
+            }
+            dba.executeQuery(ib.getQry());
+            dba.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
