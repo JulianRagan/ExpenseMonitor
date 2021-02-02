@@ -2,17 +2,21 @@ package com.jrcw.expensemonitor;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 
 import androidx.appcompat.widget.PopupMenu;
 
 import com.jrcw.expensemonitor.db.DatabaseAccess;
+import com.jrcw.expensemonitor.popupWindows.AddPlacePopupController;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -38,11 +42,14 @@ public class ExpenseEntryController {
         ((EditText)view.findViewById(R.id.etAmount)).addTextChangedListener(new TextAmountWatcher());
         ((EditText)view.findViewById(R.id.etDescription)).addTextChangedListener(new TextDescriptionWatcher());
         ((Spinner)view.findViewById(R.id.spPlace)).setOnItemSelectedListener(new PlaceSelectedItemListener());
+        ((Spinner)view.findViewById(R.id.spPlace)).setAdapter(model.getPlacesAdapter(view));
         ((Spinner)view.findViewById(R.id.spCategory)).setOnItemSelectedListener(new CategorySelectedItemListener());
+        ((Spinner)view.findViewById(R.id.spCategory)).setAdapter(model.getCategoryAdapter(view));
         ((Spinner)view.findViewById(R.id.spCurrency)).setOnItemSelectedListener(new CurrencySelectedItemListener());
+        ((Spinner)view.findViewById(R.id.spCurrency)).setAdapter(model.getCurrencyAdapter(view));
     }
 
-    private void showPopupWindow(PopupWindowType pwt){
+    private void showPopupWindow(PopupWindowType pwt, View v){
         LayoutInflater inflater = (LayoutInflater) view.getSystemService(LAYOUT_INFLATER_SERVICE);
         View pview = null;
         switch(pwt){
@@ -55,6 +62,21 @@ public class ExpenseEntryController {
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
         }
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(pview, width, height, focusable);
+        switch(pwt){
+            case PLACE:
+                new AddPlacePopupController(pview, popupWindow, view, model.getPlaces());
+                break;
+            case CATEGORY:
+
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + pwt);
+        }
+        popupWindow.showAtLocation(v, Gravity.CENTER, 0,0);
     }
 
     public void showPopup(View v, ExpenseEntryActivity view){
@@ -76,7 +98,7 @@ public class ExpenseEntryController {
 
         @Override
         public void onClick(View v) {
-
+            showPopupWindow(PopupWindowType.PLACE, v);
         }
     }
 
