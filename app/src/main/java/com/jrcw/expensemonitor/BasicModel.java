@@ -33,7 +33,7 @@ public abstract class BasicModel {
         categories = new ArrayList<>();
         currencies = new ArrayList<>();
         units = new ArrayList<>();
-
+        fetchData();
     }
 
     abstract void fetchData();
@@ -215,5 +215,25 @@ public abstract class BasicModel {
                 android.R.layout.simple_spinner_item, byCat);
         retval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return retval;
+    }
+
+    public List<Place> getPlaces() {
+        return places;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public List<Currency> getCurrencies() {
+        return currencies;
+    }
+
+    public List<UnitOfMeasure> getUnits() {
+        return units;
     }
 }

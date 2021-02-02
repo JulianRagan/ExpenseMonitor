@@ -24,8 +24,8 @@ public class ExpenseEntryModel extends BasicModel{
 
     @Override
     void fetchData() {
-        fetchCategories();
         fetchCurrencies();
+        fetchCategories();
         fetchPlaces();
         fetchProducts();
         fetchUnits();

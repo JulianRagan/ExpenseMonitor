@@ -1,35 +1,40 @@
 package com.jrcw.expensemonitor.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DBQueries {
 
     public static String qryGetAllFrom(String tableName){
         return "SELECT * FROM " + tableName + ";";
     }
 
-    public static String populateDatabase(){
-        return "INSERT INTO Category (id, Name, Description) VALUES (1, 'Żywność', 'Artykuły spo" +
+    public static List<String> populateDatabase(){
+        List<String> list = new ArrayList<>();
+        list.add("INSERT INTO Category (id, Name, Description) VALUES (1, 'Żywność', 'Artykuły spo" +
                 "żywcze'), (2, 'Kosmetyki', 'Kosmetyki'), (3, 'Higieniczne', 'Artykuły do higien" +
-                "y osobistej');\n" +
-                "INSERT INTO UnitOfMeasure (id, Description, Abbreviation) VALUES (1, 'Metr', 'm" +
+                "y osobistej');\n");
+        list.add("INSERT INTO UnitOfMeasure (id, Description, Abbreviation) VALUES (1, 'Metr', 'm" +
                 "'), (2, 'Metr kwadratowy', 'm2'), (3, 'Metr sześcienny', 'm3'), (4, 'Sztuka', '" +
-                "szt.'), (5, 'Litr', 'l'), (6, 'Kilogram', 'kg');\n" +
-                "INSERT INTO Currency (id, Name, ISOCode, ExchangeRate) VALUES (1, 'Polski złoty" +
-                "', 'PLN' '1.000');\n" +
-                "INSERT INTO LimitMode (id, Type) VALUES (1, 'Sztukowy'), (2, 'Kwotowy');\n" +
-                "INSERT INTO Preferences (DefaultEntryDelay, DefaultCurrency_id, DefaultExchange" +
+                "szt.'), (5, 'Litr', 'l'), (6, 'Kilogram', 'kg');\n");
+        list.add("INSERT INTO Currency (id, Name, ISOCode, ExchangeRate) VALUES (1, 'Polski złoty" +
+                "', 'PLN', '1.000');\n");
+        list.add("INSERT INTO LimitMode (id, Type) VALUES (1, 'Sztukowy'), (2, 'Kwotowy');\n");
+        list.add("INSERT INTO Preferences (DefaultEntryDelay, DefaultCurrency_id, DefaultExchange" +
                 "Rate, DefaultMaxForQuotaSlider, DefaultMaxForQuantitySlider) VALUES ('00:15:00'" +
-                ", 1, '1.000', 5000, 100);";
+                ", 1, '1.000', 5000, 100);");
+        return list;
     }
-    public static String createDataBase(){
-        return "CREATE TABLE Category (\n" +
+    public static List<String> createDataBase(){
+        List<String> list = new ArrayList<>();
+        list.add("CREATE TABLE Category (\n" +
                 "    id INTEGER NOT NULL,\n" +
                 "    Name VARCHAR(70) NOT NULL,\n" +
                 "    Description VARCHAR(255),\n" +
                 "    PRIMARY KEY (id),\n" +
                 "    UNIQUE (Name)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE Product (\n" +
+                ");");
+        list.add("CREATE TABLE Product (\n" +
                 "    id INTEGER NOT NULL,\n" +
                 "    Name VARCHAR(70) NOT NULL,\n" +
                 "    Description VARCHAR(255),\n" +
@@ -37,9 +42,8 @@ public class DBQueries {
                 "    Category_id INTEGER NOT NULL,\n" +
                 "    PRIMARY KEY (id),\n" +
                 "    UNIQUE (id, Name)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE Place (\n" +
+                ");\n");
+        list.add("CREATE TABLE Place (\n" +
                 "    id INTEGER NOT NULL,\n" +
                 "    Name VARCHAR(70) NOT NULL,\n" +
                 "    Description VARCHAR(255),\n" +
@@ -48,58 +52,51 @@ public class DBQueries {
                 "    CityName VARCHAR(255),\n" +
                 "    CountryName VARCHAR(255),\n" +
                 "    PRIMARY KEY (id)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE UnitOfMeasure (\n" +
+                ");\n");
+        list.add("CREATE TABLE UnitOfMeasure (\n" +
                 "    id INTEGER NOT NULL,\n" +
                 "    Description VARCHAR(255),\n" +
                 "    Abbreviation VARCHAR(10) NOT NULL,\n" +
                 "    PRIMARY KEY (id),\n" +
                 "    UNIQUE (Abbreviation)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE Currency (\n" +
+                ");\n");
+        list.add("CREATE TABLE Currency (\n" +
                 "    id INTEGER NOT NULL,\n" +
                 "    Name VARCHAR(255) NOT NULL,\n" +
                 "    ISOCode VARCHAR(3) NOT NULL,\n" +
                 "    ExchangeRate DECIMAL(10,3) NOT NULL,\n" +
                 "    PRIMARY KEY (id),\n" +
                 "    UNIQUE (Name, ISOCode)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE LimitMode (\n" +
+                ");\n");
+        list.add("CREATE TABLE LimitMode (\n" +
                 "    id INTEGER NOT NULL,\n" +
                 "    Type VARCHAR(20) NOT NULL,\n" +
                 "    PRIMARY KEY (id),\n" +
                 "    UNIQUE (Type)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE Overspend (\n" +
+                ");\n");
+        list.add("CREATE TABLE Overspend (\n" +
                 "    Limit_id INTEGER NOT NULL,\n" +
                 "    Reason VARCHAR(1000),\n" +
                 "    TimeStamp TIMESTAMP NOT NULL,\n" +
                 "    PRIMARY KEY (Limit_id)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE Expense (\n" +
+                ");\n");
+        list.add("CREATE TABLE Expense (\n" +
                 "    time DATETIME NOT NULL,\n" +
                 "    Description VARCHAR(255),\n" +
                 "    LaterEntry BOOLEAN,\n" +
                 "    Place_id INTEGER,\n" +
                 "    PRIMARY KEY (time)\n" +
                 "    FOREIGN KEY(Place_id) REFERENCES Place(id)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE Preferences (\n" +
+                ");\n");
+        list.add("CREATE TABLE Preferences (\n" +
                 "    DefaultEntryDelay TIME NOT NULL,\n" +
                 "    DefaultCurrency_id INTEGER NOT NULL,\n" +
                 "    DefaultExchangeRate DECIMAL(10,3) NOT NULL,\n" +
                 "    DefaultMaxForQuotaSlider INTEGER NOT NULL,\n" +
                 "    DefaultMaxForQuantitySlider INTEGER NOT NULL,\n" +
                 "    FOREIGN KEY(DefaultCurrency_id) REFERENCES Currency(id)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE ExpenseDetail (\n" +
+                ");\n");
+        list.add("CREATE TABLE ExpenseDetail (\n" +
                 "    time DATETIME NOT NULL,\n" +
                 "    id INTEGER NOT NULL,\n" +
                 "    Product_id INTEGER,\n" +
@@ -115,18 +112,16 @@ public class DBQueries {
                 "    FOREIGN KEY(Category_id) REFERENCES Category(id),\n" +
                 "    FOREIGN KEY(UnitOfMeasure_id) REFERENCES UnitOfMeasure(id),\n" +
                 "    FOREIGN KEY(Currency_id) REFERENCES Currency(id)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE MonitorDetails (\n" +
+                ");\n");
+        list.add("CREATE TABLE MonitorDetails (\n" +
                 "    time DATETIME NOT NULL,\n" +
                 "    NextMonit DATETIME NOT NULL,\n" +
                 "    EntryDelay TIME,\n" +
                 "    Note VARCHAR(1000),\n" +
                 "    PRIMARY KEY (time),\n" +
                 "    FOREIGN KEY(time) REFERENCES Expense(time)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE Limits (\n" +
+                ");\n");
+        list.add("CREATE TABLE Limits (\n" +
                 "    id INTEGER NOT NULL,\n" +
                 "    StartDate DATE NOT NULL,\n" +
                 "    EndDate DATE NOT NULL,\n" +
@@ -142,6 +137,7 @@ public class DBQueries {
                 "    FOREIGN KEY(Category_id) REFERENCES Category(id),\n" +
                 "    FOREIGN KEY(LimitMode_id) REFERENCES LimitMode(id),\n" +
                 "    FOREIGN KEY(Currency_id) REFERENCES Currency(id)\n" +
-                ");\n";
+                ");\n");
+        return list;
     }
 }

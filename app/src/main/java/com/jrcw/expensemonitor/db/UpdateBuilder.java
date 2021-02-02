@@ -4,31 +4,21 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class InsertBuilder {
+public class UpdateBuilder {
     private String qry;
     private String val;
 
-    /**
-     * @param table - name of table to which insert will be carried out
-     * @param firstField - name of first column
-     * @param firstData - first data (Integer, Double, String or Date)
-     * @param special - Decimal2 or Decimal3 or null
-     */
-    public InsertBuilder(String table, String firstField, Object firstData, String special) throws Exception{
-        qry = "INSERT INTO " + table + "(" + firstField;
-        val = "VALUES (";
-        addData(firstData, special);
-
+    public UpdateBuilder(String table){
+        qry = "UPDATE " + table + " SET ";
+        val = "";
     }
 
-
-    private boolean addData(Object data, String special) throws Exception{
+    private void addData(String field, Object data, String special) throws Exception{
         boolean added = false;
         String sep = ", ";
-        if(val.endsWith("(")) sep = "";
-        if (data == null){
-            val += sep + "null";
-            added = true;
+        if(val.contentEquals("")) sep = "";
+        if(data == null){
+            val += sep + field + " = null";
         }else if(special != null){
             DecimalFormat df = null;
             if(special.contentEquals("Decimal2")) {
@@ -38,25 +28,24 @@ public class InsertBuilder {
             }
             if(df != null){
                 if(data instanceof Double) {
-                    val += sep + "'" + df.format(data) + "'";
+                    val += sep + field + " = '" + df.format(data) + "'";
                     added = true;
                 }
             }
         }else {
             if (data instanceof String){
-                val += sep + "'" + (String)data + "'";
+                val += sep + field + " = '" + (String)data + "'";
                 added = true;
             }else if(data instanceof Integer){
-                val += sep + ((Integer)data).intValue();
+                val += sep + field + " = " + ((Integer)data).intValue();
                 added = true;
             }else if(data instanceof Date){
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                val += sep + "'" + dateFormat.format((Date)data) + "'";
+                val += sep + field + " = '" + dateFormat.format((Date)data) + "'";
                 added = true;
             }
         }
         if(!added) throw new Exception ("Unable to process data, unsupported data type");
-        return added;
     }
 
     /**
@@ -66,11 +55,15 @@ public class InsertBuilder {
      * @param special - Decimal2 or Decimal3 or null
      */
     public void addFieldAndData(String field, Object data, String special) throws Exception{
-        if(addData(data, special)) qry += ", " + field;
+        addData(field, data, special);
     }
 
-    public String getQry(){
-        qry += ") " + val + ");";
+    /**
+     * @param where - full WHERE clause
+     * @return
+     */
+    public String getQry(String where){
+        qry += val + " " + where + ";";
         return qry;
     }
 }

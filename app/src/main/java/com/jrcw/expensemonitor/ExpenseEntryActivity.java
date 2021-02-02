@@ -19,8 +19,4 @@ public class ExpenseEntryActivity extends AppCompatActivity {
         new ExpenseEntryController(this, model);
 
     }
-
-    public View getComponentByName(String name){
-        return findViewById(R.id.btnFunction);
-    }
 }

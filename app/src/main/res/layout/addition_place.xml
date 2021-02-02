@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustPan"
+    android:background="#62def8">
 
     <TextView
         android:id="@+id/tvCountryPlace"
@@ -56,10 +58,11 @@
         android:layout_height="22dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
+
         android:layout_marginTop="5dp"
         android:text="@string/lblAddPlace"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/lvAdditionPlace" />
 
     <Button
         android:id="@+id/btnAddAdditionPlace"
@@ -85,6 +88,8 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:hint="@string/hintCityPlace"
+        android:importantForAutofill="no"
+        android:inputType="text"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,10 +105,12 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:hint="@string/hintCountryPlace"
+        android:inputType="text"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCountryPlace" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCountryPlace"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/txtNumberPlace"
@@ -115,10 +122,12 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:hint="@string/hintNumberPlace"
+        android:inputType="text"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumberPlace" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberPlace"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/txtRoadPlace"
@@ -130,6 +139,8 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:hint="@string/hintRoadPlace"
+        android:importantForAutofill="no"
+        android:inputType="text"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -146,11 +157,13 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:hint="@string/hintDescriptionPlace"
+        android:inputType="text"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPlace" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPlace"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/txtNamePlace"
@@ -162,11 +175,13 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:hint="@string/hintNamePlace"
+        android:inputType="text"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddPlace" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAddPlace"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btnCancelAdditionPlace"
@@ -192,4 +207,20 @@
         android:text="@string/lblAddDescriptionPlace"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtNamePlace" />
+
+    <ListView
+        android:id="@+id/lvAdditionPlace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+    </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>
