@@ -18,7 +18,6 @@ public class AddPlacePopupModel {
     private String city;
     private String country;
     private String number;
-    private int id = 0;
     private Place place;
 
     public AddPlacePopupModel(List<Place> places){
@@ -56,7 +55,6 @@ public class AddPlacePopupModel {
         number = p.getStreetNumber();
         city = p.getCity();
         country = p.getCountry();
-        id = p.getId();
         place = p;
     }
 
@@ -67,7 +65,6 @@ public class AddPlacePopupModel {
         number = "";
         city = "";
         country = "";
-        id = 0;
         place = null;
     }
 
@@ -82,9 +79,13 @@ public class AddPlacePopupModel {
 
     public boolean placeExists(){
         boolean retval = false;
-        for(Place p:places){
-            if(p.getName().contentEquals(name)){
-                retval = true;
+        if(name != null) {
+            if(!name.contentEquals("")) {
+                for (Place p : places) {
+                    if (p.getName().contentEquals(name)) {
+                        retval = true;
+                    }
+                }
             }
         }
         return retval;
@@ -157,7 +158,7 @@ public class AddPlacePopupModel {
             if(!country.contentEquals(place.getCountry())){
                 ub.addFieldAndData("CountryName", country, null);
             }
-            dba.executeQuery(ub.getQry("WHERE id = " + id + ";"));
+            dba.executeQuery(ub.getQry("WHERE id = " + place.getId() + ";"));
         }catch (Exception e){
             e.printStackTrace();
         }finally {

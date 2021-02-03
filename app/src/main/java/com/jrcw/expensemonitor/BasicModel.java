@@ -217,6 +217,31 @@ public abstract class BasicModel {
         return retval;
     }
 
+    public void updatePlaces(){
+        places = new ArrayList<>();
+        fetchPlaces();
+    }
+
+    public void updateProducts(){
+        products = new ArrayList<>();
+        fetchCategories();
+    }
+
+    public void updateCategories(){
+        categories = new ArrayList<>();
+        fetchCategories();
+    }
+
+    public void updateCurrencies(){
+        currencies = new ArrayList<>();
+        fetchCurrencies();
+    }
+
+    public void updateUnits(){
+        units = new ArrayList<>();
+        fetchUnits();
+    }
+
     public List<Place> getPlaces() {
         return places;
     }

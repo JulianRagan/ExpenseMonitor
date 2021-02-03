@@ -11,8 +11,10 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.jrcw.expensemonitor.PopupWindowType;
 import com.jrcw.expensemonitor.R;
 import com.jrcw.expensemonitor.containers.Place;
+import com.jrcw.expensemonitor.containers.UpdateDataListener;
 
 import java.util.List;
 
@@ -21,6 +23,8 @@ public class AddPlacePopupController {
     PopupWindow window;
     AddPlacePopupModel model;
     Context context;
+    UpdateDataListener listener;
+
 
     public AddPlacePopupController(View view, PopupWindow w, Context c, List<Place>places){
         this.view = view;
@@ -28,6 +32,10 @@ public class AddPlacePopupController {
         this.window = w;
         this.context = c;
         initControlls();
+    }
+
+    public void setUpdateDataListener(UpdateDataListener listener){
+        this.listener = listener;
     }
 
     private void initControlls(){
@@ -39,8 +47,8 @@ public class AddPlacePopupController {
         ((EditText)view.findViewById(R.id.txtCountryPlace)).addTextChangedListener(new CountryTextWatcher());
         ((Button)view.findViewById(R.id.btnAddAdditionPlace)).setOnClickListener(new AddPlaceOnClickListener());
         ((Button)view.findViewById(R.id.btnCancelAdditionPlace)).setOnClickListener(new CancelOnClickListener());
-        ((ListView)view.findViewById(R.id.lvAdditionPlace)).setAdapter(model.getPlacesAdapter(context));
-
+        //((ListView)view.findViewById(R.id.lvAdditionPlace)).setAdapter(model.getPlacesAdapter(context));
+        //((ListView)view.findViewById(R.id.lvAdditionPlace)).setOnItemClickListener(new ListOnItemClickListener());
     }
 
     private void importPlace(Place p){
@@ -80,6 +88,7 @@ public class AddPlacePopupController {
                     if(!model.placeExists()){
                         if(model.isMinimalDataSet()){
                             model.storePlace(context);
+                            listener.dataUpdated(PopupWindowType.PLACE);
                             window.dismiss();
                         }else{
                             toastError("Należy podać nazwę miejsca");
@@ -91,6 +100,7 @@ public class AddPlacePopupController {
                 case "zachowaj":
                     if(model.isMinimalDataSet()){
                         model.updatePlace(context);
+                        listener.dataUpdated(PopupWindowType.PLACE);
                         window.dismiss();
                     }
                     break;
@@ -104,8 +114,7 @@ public class AddPlacePopupController {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Place p = (Place)parent.getItemAtPosition(position);
-            view.animate().setDuration(200l).alpha(0.0f);
-
+            importPlace(p);
         }
     }
 
