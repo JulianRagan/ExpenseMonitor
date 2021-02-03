@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +16,11 @@ import android.widget.Spinner;
 
 import androidx.appcompat.widget.PopupMenu;
 
+import com.jrcw.expensemonitor.containers.UpdateDataListener;
 import com.jrcw.expensemonitor.db.DatabaseAccess;
+import com.jrcw.expensemonitor.popupWindows.AddCategoryPopupController;
 import com.jrcw.expensemonitor.popupWindows.AddPlacePopupController;
+import com.jrcw.expensemonitor.popupWindows.AddPlacePopupModel;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -42,10 +46,22 @@ public class ExpenseEntryController {
         ((EditText)view.findViewById(R.id.etAmount)).addTextChangedListener(new TextAmountWatcher());
         ((EditText)view.findViewById(R.id.etDescription)).addTextChangedListener(new TextDescriptionWatcher());
         ((Spinner)view.findViewById(R.id.spPlace)).setOnItemSelectedListener(new PlaceSelectedItemListener());
-        ((Spinner)view.findViewById(R.id.spPlace)).setAdapter(model.getPlacesAdapter(view));
+        setAdapterPlaces();
         ((Spinner)view.findViewById(R.id.spCategory)).setOnItemSelectedListener(new CategorySelectedItemListener());
-        ((Spinner)view.findViewById(R.id.spCategory)).setAdapter(model.getCategoryAdapter(view));
+        setAdapterCategories();
         ((Spinner)view.findViewById(R.id.spCurrency)).setOnItemSelectedListener(new CurrencySelectedItemListener());
+        setAdapterCurrencies();
+    }
+
+    private void setAdapterPlaces(){
+        ((Spinner)view.findViewById(R.id.spPlace)).setAdapter(model.getPlacesAdapter(view));
+    }
+
+    private  void setAdapterCategories(){
+        ((Spinner)view.findViewById(R.id.spCategory)).setAdapter(model.getCategoryAdapter(view));
+    }
+
+    private void setAdapterCurrencies(){
         ((Spinner)view.findViewById(R.id.spCurrency)).setAdapter(model.getCurrencyAdapter(view));
     }
 
@@ -54,7 +70,8 @@ public class ExpenseEntryController {
         View pview = null;
         switch(pwt){
             case PLACE:
-                pview = inflater.inflate(R.layout.addition_place, null);
+                //pview = inflater.inflate(R.layout.addition_place, null);
+                pview = inflater.inflate(R.layout.addition_place_simple, null);
                 break;
             case CATEGORY:
                 pview = inflater.inflate(R.layout.addition_category, null);
@@ -62,20 +79,27 @@ public class ExpenseEntryController {
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
         }
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+//        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
         boolean focusable = true;
         PopupWindow popupWindow = new PopupWindow(pview, width, height, focusable);
         switch(pwt){
             case PLACE:
-                new AddPlacePopupController(pview, popupWindow, view, model.getPlaces());
+                AddPlacePopupController ctrl = new AddPlacePopupController(pview, popupWindow, view,
+                        model.getPlaces());
+                ctrl.setUpdateDataListener(new PopupUpdateDataListener());
                 break;
             case CATEGORY:
-
+                AddCategoryPopupController cc = new AddCategoryPopupController(pview, popupWindow,
+                        view, model.getCategories());
+                cc.setUpdateDataListener(new PopupUpdateDataListener());
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
         }
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         popupWindow.showAtLocation(v, Gravity.CENTER, 0,0);
     }
 
@@ -106,7 +130,7 @@ public class ExpenseEntryController {
 
         @Override
         public void onClick(View v) {
-
+            showPopupWindow(PopupWindowType.CATEGORY, v);
         }
     }
 
@@ -218,6 +242,25 @@ public class ExpenseEntryController {
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
+        }
+    }
+
+    private class PopupUpdateDataListener implements UpdateDataListener{
+
+        @Override
+        public void dataUpdated(PopupWindowType source) {
+            switch(source){
+                case PLACE:
+                    model.updatePlaces();
+                    setAdapterPlaces();
+                    break;
+                case CATEGORY:
+                    model.updateCategories();
+                    setAdapterCategories();
+                    break;
+                default:
+                    //TODO obsługa błędu
+            }
         }
     }
 

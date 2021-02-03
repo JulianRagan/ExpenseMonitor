@@ -5,64 +5,212 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:windowSoftInputMode="adjustPan"
     android:background="#62def8">
 
-    <TextView
-        android:id="@+id/tvCountryPlace"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
+    <ListView
+        android:id="@+id/lvAdditionPlace"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:text="@string/lblCountryPlace"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCityPlace" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvCityPlace"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/lblCityPlace"
+
+    </ListView>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/AddPlaceScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddAdditionPlace"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNumberPlace" />
+        app:layout_constraintTop_toBottomOf="@+id/lvAdditionPlace">
 
-    <TextView
-        android:id="@+id/tvNumberPlace"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/lblNumberPlace"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRoadPlace" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvRoadPlace"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/lblRoadPlace"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtAddDescriptionPlace" />
+            <TextView
+                android:id="@+id/tvCountryPlace"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/lblCountryPlace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCityPlace" />
 
-    <TextView
-        android:id="@+id/tvAddPlace"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
+            <TextView
+                android:id="@+id/tvCityPlace"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/lblCityPlace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtNumberPlace" />
 
-        android:layout_marginTop="5dp"
-        android:text="@string/lblAddPlace"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lvAdditionPlace" />
+            <TextView
+                android:id="@+id/tvNumberPlace"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/lblNumberPlace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtRoadPlace" />
+
+            <TextView
+                android:id="@+id/tvRoadPlace"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/lblRoadPlace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtAddDescriptionPlace" />
+
+            <TextView
+                android:id="@+id/tvAddPlace"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/lblAddPlace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/txtCityPlace"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:hint="@string/hintCityPlace"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCityPlace" />
+
+            <EditText
+                android:id="@+id/txtCountryPlace"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:hint="@string/hintCountryPlace"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCountryPlace" />
+
+            <EditText
+                android:id="@+id/txtNumberPlace"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:hint="@string/hintNumberPlace"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNumberPlace" />
+
+            <EditText
+                android:id="@+id/txtRoadPlace"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:hint="@string/hintRoadPlace"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRoadPlace" />
+
+            <EditText
+                android:id="@+id/txtAddDescriptionPlace"
+                android:layout_width="0dp"
+                android:layout_height="96dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:hint="@string/hintDescriptionPlace"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPlace" />
+
+            <EditText
+                android:id="@+id/txtNamePlace"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:hint="@string/hintNamePlace"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddPlace" />
+
+            <TextView
+                android:id="@+id/tvDescriptionPlace"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/lblAddDescriptionPlace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtNamePlace" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <Button
         android:id="@+id/btnAddAdditionPlace"
@@ -76,112 +224,8 @@
         android:text="@string/btnAddAdditionPlace"
         app:layout_constraintEnd_toStartOf="@+id/btnCancelAdditionPlace"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCountryPlace" />
+        app:layout_constraintTop_toBottomOf="@+id/AddPlaceScrollView" />
 
-    <EditText
-        android:id="@+id/txtCityPlace"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="@string/hintCityPlace"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCityPlace" />
-
-    <EditText
-        android:id="@+id/txtCountryPlace"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="@string/hintCountryPlace"
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCountryPlace"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/txtNumberPlace"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="@string/hintNumberPlace"
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumberPlace"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/txtRoadPlace"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="@string/hintRoadPlace"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRoadPlace" />
-
-    <EditText
-        android:id="@+id/txtAddDescriptionPlace"
-        android:layout_width="0dp"
-        android:layout_height="96dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="@string/hintDescriptionPlace"
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionPlace"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/txtNamePlace"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="@string/hintNamePlace"
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddPlace"
-        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btnCancelAdditionPlace"
@@ -195,32 +239,9 @@
         android:text="@string/btnCancelAdditionPlace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnAddAdditionPlace"
-        app:layout_constraintTop_toBottomOf="@+id/txtCountryPlace" />
-
-    <TextView
-        android:id="@+id/tvDescriptionPlace"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/lblAddDescriptionPlace"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNamePlace" />
-
-    <ListView
-        android:id="@+id/lvAdditionPlace"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/AddPlaceScrollView" />
 
 
-    </ListView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
