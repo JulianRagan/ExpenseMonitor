@@ -5,8 +5,8 @@
     <string name="lblGodzina">Godzina</string>
     <string name="lblMiejsce">Miejsce</string>
     <string name="btnAdd">Dodaj</string>
-    <string name="hintEditDate">Wprowadź datę</string>
-    <string name="hintEditTime">Wprowadź godzinę</string>
+    <string name="hintEditDate">dd.mm.rrrr</string>
+    <string name="hintEditTime">hh:mm:ss</string>
     <string name="lblKategoria">Kategoria</string>
     <string name="lblOpis">Opis</string>
     <string name="hintDescription">Podaj opis</string>
