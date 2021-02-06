@@ -1,13 +1,8 @@
 package com.jrcw.expensemonitor;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 
 import android.os.Bundle;
-import android.view.MenuInflater;
-import android.view.View;
-
-import com.jrcw.expensemonitor.db.DatabaseAccess;
 
 public class ExpenseEntryActivity extends AppCompatActivity {
 
@@ -17,6 +12,6 @@ public class ExpenseEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_expenseentry);
         ExpenseEntryModel model = new ExpenseEntryModel(this);
         new ExpenseEntryController(this, model);
-
     }
+
 }
