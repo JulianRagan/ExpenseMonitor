@@ -1,6 +1,7 @@
 package com.jrcw.expensemonitor;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.drawable.InsetDrawable;
 
 import com.jrcw.expensemonitor.containers.Currency;
@@ -167,29 +168,35 @@ public class ExpenseEntryModel extends BasicModel{
         description = "";
     }
 
-    public void storeExpense(){
+    public void storeExpense() throws Exception{
         DatabaseAccess dba = new DatabaseAccess(context);
         dba.open();
+        int oldPlaceId = checkEntry(dba);
         try{
-            dba.executeQuery(insertExpense());
-            dba.executeQuery(insertBasicDetail());
-        }catch (Exception e){
-            e.printStackTrace();
+            if(oldPlaceId == 0) {
+                dba.executeQuery(insertExpense());
+                dba.executeQuery(insertBasicDetail());
+            }else {
+                throw new Exception("Exists");
+            }
         }finally {
             dba.close();
         }
     }
 
-    public void storeForDetails(){
+    public void storeForDetails() throws Exception{
         DatabaseAccess dba = new DatabaseAccess(context);
         dba.open();
+        int oldPlaceId = checkEntry(dba);
         try{
-            dba.executeQuery(insertExpense());
-            if(expenditureTotal > 0.0){
-                dba.executeQuery(insertBasicDetail());
+            if(oldPlaceId == 0) {
+                dba.executeQuery(insertExpense());
+                if (expenditureTotal > 0.0) {
+                    dba.executeQuery(insertBasicDetail());
+                }
+            }else if(oldPlaceId != placeId){
+                throw new Exception("Bad place");
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }finally {
             dba.close();
         }
@@ -222,5 +229,17 @@ public class ExpenseEntryModel extends BasicModel{
         ib.addFieldAndData("Currency_id", currencyId, null);
         ib.addFieldAndData("ExchangeRate", getExchangeRate(), "Decimal2");
         return ib.getQry();
+    }
+
+    private int checkEntry(DatabaseAccess dba){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String qry = "SELECT Place_id FROM Expense WHERE " + sdf.format(timeOfTransaction) + ";";
+        int retval = 0;
+        Cursor rs = dba.fetchAny(qry);
+        if(rs.moveToFirst()){
+            retval = rs.getInt(rs.getColumnIndex("Place_id"));
+        }
+        rs.close();
+        return retval;
     }
 }

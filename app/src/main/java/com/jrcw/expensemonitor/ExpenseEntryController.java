@@ -106,8 +106,14 @@ public class ExpenseEntryController {
             case "No date":
                 toastError("Brak daty");
                 break;
+            case "Bad place":
+                toastError("O podanym czasie jest już zachowany zakup w innym miejscu");
+                break;
+            case "Exists":
+                toastError("Dla podanego czasu jest już zachowany zakup");
             default:
                 toastError("Nieznany błąd");
+                e.printStackTrace();
         }
     }
 
@@ -158,6 +164,7 @@ public class ExpenseEntryController {
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_function, popup.getMenu());
         popup.setOnMenuItemClickListener(new ActivitySwitch());
+        popup.getMenu().findItem(R.id.menuExpenses).setEnabled(false);
         popup.show();
     }
 
