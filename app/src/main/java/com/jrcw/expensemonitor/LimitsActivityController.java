@@ -204,11 +204,11 @@ public class LimitsActivityController {
         public void onClick(View v) {
             try {
                 if (model.isMinimalDataSet()) {
-                    //             model.storeExpense();
-                    //             clear();
+               //     model.storeExpense();
+             //      clear();
                 }
             } catch (Exception e) {
-                //         handleMinimalaDataS(e);
+            //    handleMinimalaDataS(e);
             }
         }
 
@@ -362,10 +362,74 @@ public class LimitsActivityController {
 
         @Override
         public void afterTextChanged(Editable s) {
+            String date = s.toString();
+            boolean dd = false;
+            boolean mm = false;
+            boolean yy = false;
+            char sep = 0;
+            int fsl = 0;
 
+            if (date.length() > 0) dd = true;
+            for (int i = 0; i < date.length(); i++) {
+                char ch = date.charAt(i);
+                if (isSeparator(ch)) {
+                    if (dd && !mm) {
+                        sep = ch;
+                        fsl = i;
+                        int day = Integer.parseInt(date.substring(0, i));
+                        if (day > 31) {
+                            toastError("Miesiąc ma maksymalnie 31 dni");
+                            s.clear();
+                            break;
+                        } else if (day < 1) {
+                            toastError("Miesiąc zaczyna się od 1-ego");
+                            s.clear();
+                            break;
+                        } else {
+                            mm = true;
+                        }
+                    } else if (dd && mm) {
+                        if (sep != ch) {
+                            date.replace(ch, sep);
+                            s.clear();
+                            s.insert(0, date);
+                        }
+                        yy = true;
+                    } else if (dd && mm && yy) {
+                        s.clear();
+                        s.insert(0, date.substring(0, i - 1));
+                        toastError("Niepoprawna data");
+                        break;
+                    }
+                }
+                if (dd && mm && !yy) {
+                    if (i - 1 > fsl) {
+                        int month = Integer.parseInt(date.substring(fsl + 1, i + 1));
+                        if (month > 12) {
+                            toastError("Rok ma maksymalnie 12 miesięcy");
+                        } else if (fsl - i == 2) {
+                            if (month < 1) toastError("Nieprawidłowy miesiąc");
+                            s.clear();
+                            s.insert(0, date.substring(0, fsl));
+                            break;
+                        }
+
+
+                    }
+                    model.setFromField(s.toString());
+
+                }
+
+            }
         }
-    }
 
+        private boolean isSeparator(char a) {
+            if (a == ':' || a == ',' || a == '.') return true;
+            return false;
+        }
+
+
+    }
     private class DoEditTextListener implements TextWatcher {
 
 
@@ -381,16 +445,80 @@ public class LimitsActivityController {
 
         @Override
         public void afterTextChanged(Editable s) {
+            String date = s.toString();
+            boolean dd = false;
+            boolean mm = false;
+            boolean yy = false;
+            char sep = 0;
+            int fsl = 0;
+
+            if (date.length() > 0) dd = true;
+            for (int i = 0; i < date.length(); i++) {
+                char ch = date.charAt(i);
+                if (isSeparator(ch)) {
+                    if (dd && !mm) {
+                        sep = ch;
+                        fsl = i;
+                        int day = Integer.parseInt(date.substring(0, i));
+                        if (day > 31) {
+                            toastError("Miesiąc ma maksymalnie 31 dni");
+                            s.clear();
+                            break;
+                        } else if (day < 1) {
+                            toastError("Miesiąc zaczyna się od 1-ego");
+                            s.clear();
+                            break;
+                        } else {
+                            mm = true;
+                        }
+                    } else if (dd && mm) {
+                        if (sep != ch) {
+                            date.replace(ch, sep);
+                            s.clear();
+                            s.insert(0, date);
+                        }
+                        yy = true;
+                    } else if (dd && mm && yy) {
+                        s.clear();
+                        s.insert(0, date.substring(0, i - 1));
+                        toastError("Niepoprawna data");
+                        break;
+                    }
+                }
+                if (dd && mm && !yy) {
+                    if (i - 1 > fsl) {
+                        int month = Integer.parseInt(date.substring(fsl + 1, i + 1));
+                        if (month > 12) {
+                            toastError("Rok ma maksymalnie 12 miesięcy");
+                        } else if (fsl - i == 2) {
+                            if (month < 1) toastError("Nieprawidłowy miesiąc");
+                            s.clear();
+                            s.insert(0, date.substring(0, fsl));
+                            break;
+                        }
+                    }
+                }
+            }
+            model.setFromField(s.toString());
 
         }
+        private boolean isSeparator(char a) {
+            if (a == ':' || a == ',' || a == '.') return true;
+            return false;
+        }
     }
+
 
     private class CheckBoxListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             CompoundButton btn = (CompoundButton) view.findViewById(R.id.ckbCategory);
             if (btn.isChecked()) {
-
+                view.findViewById(R.id.btnAddProduct).setEnabled(false);
+                view.findViewById(R.id.spProduct).setEnabled(false);
+            }else{
+                view.findViewById(R.id.btnAddProduct).setEnabled(true);
+                view.findViewById(R.id.spProduct).setEnabled(true);
             }
         }
     }
@@ -455,83 +583,8 @@ public class LimitsActivityController {
                     //TODO obsługa błędu
             }
         }
+
     }
-
-    private class TextDateWatcher implements TextWatcher {
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        private boolean isSeparator(char a) {
-            if (a == '-' || a == '/' || a == '.') return true;
-            return false;
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String date = s.toString();
-            boolean dd = false;
-            boolean mm = false;
-            boolean yy = false;
-            char sep = 0;
-            int fsl = 0;
-
-            if (date.length() > 0) dd = true;
-            for (int i = 0; i < date.length(); i++) {
-                char ch = date.charAt(i);
-                if (isSeparator(ch)) {
-                    if (dd && !mm) {
-                        sep = ch;
-                        fsl = i;
-                        int day = Integer.parseInt(date.substring(0, i));
-                        if (day > 31) {
-                            toastError("Miesiąc ma maksymalnie 31 dni");
-                            s.clear();
-                            break;
-                        } else if (day < 1) {
-                            toastError("Miesiąc zaczyna się od 1-ego");
-                            s.clear();
-                            break;
-                        } else {
-                            mm = true;
-                        }
-                    } else if (dd && mm) {
-                        if (sep != ch) {
-                            date.replace(ch, sep);
-                            s.clear();
-                            s.insert(0, date);
-                        }
-                        yy = true;
-                    } else if (dd && mm && yy) {
-                        s.clear();
-                        s.insert(0, date.substring(0, i - 1));
-                        toastError("Niepoprawna data");
-                        break;
-                    }
-                }
-                if (dd && mm && !yy) {
-                    if (i - 1 > fsl) {
-                        int month = Integer.parseInt(date.substring(fsl + 1, i + 1));
-                        if (month > 12) {
-                            toastError("Rok ma maksymalnie 12 miesięcy");
-                        } else if (fsl - i == 2) {
-                            if (month < 1) toastError("Nieprawidłowy miesiąc");
-                            s.clear();
-                            s.insert(0, date.substring(0, fsl));
-                            break;
-                        }
-                    }
-                }
-            }
-            model.setFromField(s.toString());
-
-        }
-
 
         private void handleMinimalaDataSetExceptions(Exception e) {
             switch (e.getMessage()) {
@@ -555,5 +608,5 @@ public class LimitsActivityController {
             }
         }
     }
-}
+
 
