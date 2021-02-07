@@ -16,29 +16,6 @@ public class LimitsActivity extends AppCompatActivity {
         new LimitsActivityController(this, new LimitsActivityModel(this));
     }
 
-    public Button getButtonByName(String name) throws Exception {
-        Button btn = null;
-        switch (name) {
-
-            case "Edytuj":
-                btn = (Button) this.findViewById(R.id.btnSet);
-                break;
-            case "Ustaw":
-                btn = (Button) this.findViewById(R.id.btnCancel);
-                break;
-            case "Produkty":
-                btn = (Button) this.findViewById(R.id.btnAddProduct);
-                break;
-            case "Kategorie":
-                btn = (Button) this.findViewById(R.id.btnAddCategory);
-                break;
-        }
-        if (btn != null) {
-            return btn;
-        } else {
-            throw new Exception();
-        }
-    }
 
     public EditText getEditTextByName(String name) throws Exception {
         EditText txt = null;

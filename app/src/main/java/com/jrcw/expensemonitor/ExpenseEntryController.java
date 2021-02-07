@@ -1,10 +1,12 @@
 package com.jrcw.expensemonitor;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -143,6 +145,7 @@ public class ExpenseEntryController {
                 break;
             case DETAILS:
                 new AddDetailPopupController(pview, popupWindow, view, model.getTimeOfTransaction());
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
         }
@@ -154,7 +157,45 @@ public class ExpenseEntryController {
         PopupMenu popup = new PopupMenu(view, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_function, popup.getMenu());
+        popup.setOnMenuItemClickListener(new ActivitySwitch());
         popup.show();
+    }
+
+    public void clear(){
+        model.clear();
+        ((EditText)view.findViewById(R.id.editTextDate)).setText("");
+        ((EditText)view.findViewById(R.id.editTextTime)).setText("");
+        ((EditText)view.findViewById(R.id.etAmount)).setText("");
+        ((EditText)view.findViewById(R.id.etDescription)).setText("");
+    }
+
+    private class ActivitySwitch implements PopupMenu.OnMenuItemClickListener{
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            runActivity(view.getResources().getResourceName(item.getItemId()));
+            return false;
+        }
+
+        private void runActivity(String name){
+            Intent myIntent = null;
+            switch (name){
+                case "com.jrcw.expensemonitor:id/menuExpenses":
+                    myIntent = new Intent(view, ExpenseEntryActivity.class);
+                    break;
+                case "com.jrcw.expensemonitor:id/menuLimits":
+                    myIntent = new Intent(view, LimitsActivity.class);
+                    break;
+                case "com.jrcw.expensemonitor:id/menuStatistics":
+                    myIntent = new Intent(view, Statistics.class);
+                    break;
+                default:
+                    toastError("Nieznana funkcja menu");
+            }
+            if(myIntent != null){
+                view.startActivity(myIntent);
+            }
+        }
     }
 
     private class FunctionMenuOnClickListener implements View.OnClickListener{
@@ -185,7 +226,14 @@ public class ExpenseEntryController {
 
         @Override
         public void onClick(View v) {
-
+            try {
+                if(model.isMinimalDataSetForStoring()){
+                    model.storeExpense();
+                    clear();
+                }
+            } catch (Exception e) {
+                handleMinimalaDataSetExceptions(e);
+            }
         }
     }
 
@@ -233,7 +281,7 @@ public class ExpenseEntryController {
                     if(dd && !mm){
                         sep = ch;
                         fsl = i;
-                        int day = Integer.parseInt(date.substring(0, i-1));
+                        int day = Integer.parseInt(date.substring(0, i));
                         if(day > 31){
                             toastError("Miesiąc ma maksymalnie 31 dni");
                             s.clear();
@@ -288,7 +336,12 @@ public class ExpenseEntryController {
                     if (ds.contentEquals("")) {
                         toastError("Nieprawidłowa data");
                     } else {
-                        String[] c = date.split(ds);
+                        String[] c;
+                        if(ds.contentEquals(".")){
+                            c = date.split("\\.");
+                        }else {
+                            c = date.split(ds);
+                        }
                         if (c.length != 3) {
                             toastError("Nieprawidłowa data");
                         } else {

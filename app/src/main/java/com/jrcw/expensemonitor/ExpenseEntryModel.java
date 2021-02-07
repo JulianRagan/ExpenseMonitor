@@ -1,6 +1,11 @@
 package com.jrcw.expensemonitor;
 
 import android.content.Context;
+import android.graphics.drawable.InsetDrawable;
+
+import com.jrcw.expensemonitor.containers.Currency;
+import com.jrcw.expensemonitor.db.DatabaseAccess;
+import com.jrcw.expensemonitor.db.InsertBuilder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,40 +35,16 @@ public class ExpenseEntryModel extends BasicModel{
         if(getPlaces().size() > 0) placeId = getPlaces().get(0).getId();
     }
 
-    public String getDateString() {
-        return dateString;
-    }
-
     public void setDateString(String dateString) {
         this.dateString = dateString;
-    }
-
-    public String getTimeString() {
-        return timeString;
     }
 
     public void setTimeString(String timeString) {
         this.timeString = timeString;
     }
 
-    public double getExpenditureTotal() {
-        return expenditureTotal;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public int getCurrencyId() {
-        return currencyId;
-    }
-
-    public int getPlaceId() {
-        return placeId;
     }
 
     public void setPlaceId(int placeId) {
@@ -76,10 +57,6 @@ public class ExpenseEntryModel extends BasicModel{
 
     public Date getTimeOfTransaction() {
         return timeOfTransaction;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
@@ -145,13 +122,18 @@ public class ExpenseEntryModel extends BasicModel{
     }
 
     private String formatDatePart(String dateString, String ds) throws Exception{
-        String[] comps = dateString.split(ds);
+        String[] comps;
+        if(ds.contentEquals(".")){
+            comps = dateString.split("\\.");
+        }else {
+            comps = dateString.split(ds);
+        }
         if(comps.length != 3){
             throw  new Exception("Bad date format");
         }
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-        String yy = sdf.format(d).substring(0,1);
+        String yy = sdf.format(d).substring(0,2);
         if(comps[0].length() == 1) comps[0] = "0" + comps[0];
         else if(comps[0].length() != 2) throw new Exception("Bad day field");
         if(comps[1].length() == 1) comps[1] = "0" + comps[1];
@@ -177,11 +159,68 @@ public class ExpenseEntryModel extends BasicModel{
         throw new Exception("separator");
     }
 
-    public void storeExpense(){
+    public void clear(){
+        dateString = "";
+        timeString = "";
+        timeOfTransaction = null;
+        expenditureTotal = 0.0;
+        description = "";
+    }
 
+    public void storeExpense(){
+        DatabaseAccess dba = new DatabaseAccess(context);
+        dba.open();
+        try{
+            dba.executeQuery(insertExpense());
+            dba.executeQuery(insertBasicDetail());
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            dba.close();
+        }
     }
 
     public void storeForDetails(){
+        DatabaseAccess dba = new DatabaseAccess(context);
+        dba.open();
+        try{
+            dba.executeQuery(insertExpense());
+            if(expenditureTotal > 0.0){
+                dba.executeQuery(insertBasicDetail());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            dba.close();
+        }
+    }
 
+    private double getExchangeRate(){
+        for(Currency c:getCurrencies()){
+            if(c.getId() == currencyId){
+                return c.getExchangeRate();
+            }
+        }
+        return 1.00;
+    }
+
+    private String insertExpense() throws Exception {
+        InsertBuilder ib = new InsertBuilder("Expense", "time", timeOfTransaction, null);
+        if(description != null){
+            if(!description.contentEquals("")){
+                ib.addFieldAndData("Description", description, null);
+            }
+        }
+        ib.addFieldAndData("Place_id", placeId, null);
+        return ib.getQry();
+    }
+
+    private String insertBasicDetail() throws Exception {
+        InsertBuilder ib = new InsertBuilder("ExpenseDetail", "time", timeOfTransaction, null);
+        ib.addFieldAndData("Category_id", categoryId, null);
+        ib.addFieldAndData("Amount", expenditureTotal, "Decimal2");
+        ib.addFieldAndData("Currency_id", currencyId, null);
+        ib.addFieldAndData("ExchangeRate", getExchangeRate(), "Decimal2");
+        return ib.getQry();
     }
 }
