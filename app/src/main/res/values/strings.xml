@@ -27,8 +27,8 @@
     <string name="hintFunds">Wprowadź kwote</string>
     <string name="hintQuantity">Wprowadź ilość</string>
     <string name="ckbCategory">Tylko kat</string>
-    <string name="hintTo">Do</string>
-    <string name="hintFrom">Od</string>
+    <string name="hintTo">Do dd.mm.rrrr</string>
+    <string name="hintFrom">Od dd.mm.rrrr</string>
     <string name="lblName">Nazwa</string>
     <string name="hintCategory">Podaj nazwę kategorii</string>
     <string name="hintProductName">Wprowadź nazwę produktu</string>
@@ -106,4 +106,8 @@
     <string name="btnChangePrice">Zmiana Cen</string>
     <string name="btnOverruns">Przekroczenia</string>
     <string name="btnChooseFunction">Wybierz Fukcje</string>
+    <string name="lblFrom">Od</string>
+    <string name="lblTo">Do</string>
+    <string name="btnShow">Pokaż</string>
+    <string name="btnClose">Zamknij</string>
 </resources>
