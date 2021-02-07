@@ -11,6 +11,7 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.jrcw.expensemonitor.LimitsActivityController;
 import com.jrcw.expensemonitor.PopupWindowType;
 import com.jrcw.expensemonitor.R;
 import com.jrcw.expensemonitor.containers.Category;
@@ -30,6 +31,7 @@ public class AddProductPopupController {
     public AddProductPopupController(View view, PopupWindow w, Context c, List<Category> categories,
                                      List<UnitOfMeasure> units, List<Product> products) {
 
+
         this.view = view;
         this.model = new AddProductPopupModel(products, categories, units, context);
         this.window = w;
@@ -39,12 +41,28 @@ public class AddProductPopupController {
 
     private void initControlls() {
         ((Spinner) view.findViewById(R.id.spChooseCategory)).setOnItemSelectedListener(new CategoryItemSelectedListener());
+        setAdapterCategories();
         ((Spinner) view.findViewById(R.id.spChooseUnit)).setOnItemSelectedListener(new UnitItemSelectedListener());
+        setAdapterUnit();
         ((EditText) view.findViewById(R.id.txtProductName)).addTextChangedListener(new NameTextChangeListener());
-        ((EditText) view.findViewById(R.id.txtDescriptionProduct)).addTextChangedListener(new NameTextChangeListener());
+        ((EditText) view.findViewById(R.id.txtDescriptionProduct)).addTextChangedListener(new  DescriptionTextChangeListener());
         ((Button) view.findViewById(R.id.btnAdditionProduct)).setOnClickListener(new AdditinonProductOnClickListener());
         ((Button) view.findViewById(R.id.btnCancelProduct)).setOnClickListener(new CancelOnClickListener());
 
+    }
+    private void setAdapterUnit(){
+        ((Spinner)view.findViewById(R.id.spChooseUnit)).setAdapter(
+                model.getUnitAdapter(context));
+    }
+
+    private void setAdapterCategories(){
+        ((Spinner)view.findViewById(R.id.spChooseCategory)).setAdapter(
+                model.getCategoriesAdapter(context));
+    }
+
+
+    public void setUpdateDataListener(UpdateDataListener listener) {
+        this.listener = listener;
     }
 
 
@@ -52,6 +70,8 @@ public class AddProductPopupController {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            int cid = ((Category)parent.getItemAtPosition(position)).getId();
+            model.setCategoryId(cid);
 
         }
 
@@ -65,7 +85,8 @@ public class AddProductPopupController {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            int uni = ((UnitOfMeasure)parent.getItemAtPosition(position)).getId();
+            model.setUnitId(uni);
         }
 
         @Override
@@ -87,7 +108,7 @@ public class AddProductPopupController {
 
         @Override
         public void afterTextChanged(Editable s) {
-
+            model.setName(s.toString());
         }
     }
 
@@ -104,7 +125,7 @@ public class AddProductPopupController {
 
         @Override
         public void afterTextChanged(Editable s) {
-
+            model.setDescription(s.toString());
         }
     }
 

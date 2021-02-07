@@ -224,7 +224,7 @@ public abstract class BasicModel {
 
     public void updateProducts(){
         products = new ArrayList<>();
-        fetchCategories();
+        fetchProducts();
     }
 
     public void updateCategories(){
