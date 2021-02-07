@@ -1,61 +1,37 @@
 package com.jrcw.expensemonitor;
 
+import android.content.Context;
+
+import androidx.appcompat.view.ContextThemeWrapper;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class LimitsActivityModel {
+public class LimitsActivityModel extends BasicModel{
     private int funds;
     private int quantity;
     private Date from;
     private Date to;
-    private List<String>categories;
-    private List<String>products;
-    private String category;
-    private String product;
+    private int categoryId;
+    private int productId;
+    private boolean onlyCategory;
+    private int currencyId;
 
-    public LimitsActivityModel() {
-        funds = 0;
-        quantity = 0;
-        from = new Date();
-        to = new Date();
-        categories = getCategoryList();
-        products = getProductsList(categories.get(0));
-        category = categories.get(0);
-        product = products.get(0);
+    public LimitsActivityModel(Context context) {
+        super(context);
 
 
     }
-
-    private List<String> getProductsList(String category) {
-        //TODO pobieranie danych z bazy danych
-        List<String>retval = new ArrayList<>();
-        switch (category) {
-            case "Alkohol":
-                retval.add("Żubr");
-                retval.add("Tyski");
-                break;
-            case "Owoce":
-                retval.add("Mango");
-                retval.add("Cutryna");
-                break;
-            case "Warzywa":
-                retval.add("Marchew");
-                retval.add("Papryka");
-                break;
-
-        }
-        return retval;
+    @Override
+    void fetchData() {
+        fetchCategories();
+        fetchProducts();
+        fetchCurrencies();
     }
 
-    private List<String> getCategoryList() {
-        //TODO pobieranie danych z bazy danych
-        List<String>retval = new ArrayList<>();
-        retval.add("Alkohol");
-        retval.add("Owoce");
-        retval.add("Warzywa");
-        return retval;
-    }
+
+
 
     public void saveLimit() {
         //TODO zapisanie limitu do bazy danych
@@ -77,20 +53,52 @@ public class LimitsActivityModel {
         this.to = to;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public int getFunds() {
+        return funds;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public List<String> getCategories() {
-        return categories;
+    public Date getFrom() {
+        return from;
     }
 
-    public List<String> getProducts() {
-        return products;
+    public Date getTo() {
+        return to;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public boolean isOnlyCategory() {
+        return onlyCategory;
+    }
+
+    public void setOnlyCategory(boolean onlyCategory) {
+        this.onlyCategory = onlyCategory;
+    }
+
+    public int getCurrencyId() {
+        return currencyId;
+    }
+
+    public void setCurrencyId(int currencyId) {
+        this.currencyId = currencyId;
     }
 }
 
