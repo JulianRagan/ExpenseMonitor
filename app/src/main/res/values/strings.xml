@@ -37,9 +37,9 @@
     <string name="hintDescriptionProdukt">Opis produktu</string>
     <string name="txtImplementName">Wprowadź nazwę produktu</string>
     <string name="txtChooseUnit">Wybierz jednostkę</string>
-    <string name="btnAddProduct">Dodaj/Zachowaj</string>
-    <string name="btnCancelProduct">Anuluj/Odrzuć</string>
-    <string name="lvlDateProduct">Danw rpoduktu</string>
+    <string name="btnAddProduct">Dodaj</string>
+    <string name="btnCancelProduct">Anuluj</string>
+    <string name="lvlDateProduct">Dane produktu</string>
     <string name="lblDateProducts">Dane Produktu</string>
     <string name="btnDateProduct">Dane Produktu</string>
     <string name="lvDateProduct">Dane Produktu</string>

@@ -7,6 +7,7 @@ import com.jrcw.expensemonitor.containers.Category;
 import com.jrcw.expensemonitor.containers.Product;
 import com.jrcw.expensemonitor.containers.UnitOfMeasure;
 import com.jrcw.expensemonitor.db.DatabaseAccess;
+import com.jrcw.expensemonitor.db.InsertBuilder;
 import com.jrcw.expensemonitor.db.UpdateBuilder;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class AddProductPopupModel {
     private List<Category> categories;
     private List<UnitOfMeasure> units;
     private Context context;
+
 
     public AddProductPopupModel(List<Product> products, List<Category> categories, List<UnitOfMeasure> units, Context context) {
         this.context = context;
@@ -44,6 +46,14 @@ public class AddProductPopupModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setUnitId(int unitId) {
+        this.unitId = unitId;
     }
 
     public void populateFromProduct(Product product) {
@@ -98,6 +108,17 @@ public class AddProductPopupModel {
         return retval;
     }
 
+    public ArrayAdapter<Category> getCategoriesAdapter(Context context){
+        ArrayAdapter<Category> retval = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_item, categories);
+        return retval;
+    }
+    public ArrayAdapter<UnitOfMeasure> getUnitAdapter(Context context){
+        ArrayAdapter<UnitOfMeasure> retval = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_item, units);
+        return retval;
+    }
+
     public void updateProduct(Context p){
         DatabaseAccess dba = new DatabaseAccess(p);
         dba.open();
@@ -118,5 +139,25 @@ public class AddProductPopupModel {
     }
 
     public void storeProduct(Context context) {
+        DatabaseAccess dba = new DatabaseAccess(context);
+        dba.open();
+        try{
+            InsertBuilder ib = new InsertBuilder("Product", "Name", name, null);
+            if(description != null) {
+                if (!description.contentEquals("")) {
+                    ib.addFieldAndData("Description", description, null);
+                }
+
+            }
+            ib.addFieldAndData("DefaultUnit_id", unitId, null);
+            ib.addFieldAndData("Category_id", categoryId, null);
+            dba.executeQuery(ib.getQry());
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            dba.close();
+        }
     }
+
+
 }

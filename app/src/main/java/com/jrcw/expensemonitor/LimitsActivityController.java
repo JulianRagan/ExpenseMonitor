@@ -1,10 +1,12 @@
 package com.jrcw.expensemonitor;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -26,6 +28,7 @@ import com.jrcw.expensemonitor.containers.Product;
 import com.jrcw.expensemonitor.containers.UpdateDataListener;
 import com.jrcw.expensemonitor.popupWindows.AddCategoryPopupController;
 import com.jrcw.expensemonitor.popupWindows.AddPlacePopupController;
+import com.jrcw.expensemonitor.popupWindows.AddProductPopupController;
 
 import java.sql.Date;
 
@@ -59,10 +62,11 @@ public class LimitsActivityController {
         ((SeekBar) view.findViewById(R.id.seekSztuki)).setOnSeekBarChangeListener(new SztukiSeekBarListener());
         ((EditText) view.findViewById(R.id.etFunds)).addTextChangedListener(new FunduszeTextChangedListener());
         ((EditText) view.findViewById(R.id.etQuantity)).addTextChangedListener(new SztukiTextChangedListener());
-        ((EditText) view.findViewById(R.id.etFrom)).setOnClickListener(new OdEditTextListener());
-        ((EditText) view.findViewById(R.id.etTo)).setOnClickListener(new DoEditTextListener());
+        ((EditText) view.findViewById(R.id.etFrom)).addTextChangedListener(new OdEditTextListener());
+        ((EditText) view.findViewById(R.id.etTo)).addTextChangedListener(new DoEditTextListener());
         ((Button) view.findViewById(R.id.btnSet)).setOnClickListener(new UstawOnClickListener());
         ((Button) view.findViewById(R.id.btnCancel)).setOnClickListener(new EdytujOnClickListener());
+        ((Button) view.findViewById(R.id.btnFunction2)).setOnClickListener(new ButtonFunctionListener());
 
     }
 
@@ -74,9 +78,11 @@ public class LimitsActivityController {
         ((Spinner) view.findViewById(R.id.spCurrencyLimits)).setAdapter(model.getCurrencyAdapter(view));
     }
 
-    private void setAdapterProducts() {
-        String Cat = model.getCategories().get(0).getName();
-        ((Spinner) view.findViewById(R.id.spProduct)).setAdapter(model.getProductsAdapter(view, Cat));
+    private void setAdapterProducts(){
+        String categoryName = ((Category)((Spinner)view.findViewById(R.id.spCategory))
+                .getSelectedItem()).getName();
+        ((Spinner)view.findViewById(R.id.spProduct)).setAdapter(
+                model.getProductsAdapter(view, categoryName));
     }
 
     private void setAdapterProducts(String Cat) {
@@ -92,9 +98,8 @@ public class LimitsActivityController {
         LayoutInflater inflater = (LayoutInflater) view.getSystemService(LAYOUT_INFLATER_SERVICE);
         View pview = null;
         switch(pwt){
-            case PLACE:
-                //pview = inflater.inflate(R.layout.addition_place, null);
-                pview = inflater.inflate(R.layout.addition_place_simple, null);
+            case PRODUCT:
+                pview = inflater.inflate(R.layout.addition_products, null);
                 break;
             case CATEGORY:
                 pview = inflater.inflate(R.layout.addition_category, null);
@@ -102,16 +107,14 @@ public class LimitsActivityController {
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
         }
-//        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
-//        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
         boolean focusable = true;
         PopupWindow popupWindow = new PopupWindow(pview, width, height, focusable);
         switch(pwt){
-            case PLACE:
-                AddPlacePopupController ctrl = new AddPlacePopupController(pview, popupWindow, view,
-                        model.getPlaces());
+            case PRODUCT:
+                AddProductPopupController ctrl = new AddProductPopupController(pview, popupWindow,
+                        view, model.getCategories(), model.getUnits(), model.getProducts());
                 ctrl.setUpdateDataListener(new PopupUpdateDataListener());
                 break;
             case CATEGORY:
@@ -126,11 +129,40 @@ public class LimitsActivityController {
         popupWindow.showAtLocation(v, Gravity.CENTER, 0,0);
     }
 
-    public void showPopup(View v, ExpenseEntryActivity view){
+    public void showPopup(View v, LimitsActivity view){
         PopupMenu popup = new PopupMenu(view, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_function, popup.getMenu());
+        popup.setOnMenuItemClickListener(new ActivitySwitch());
         popup.show();
+    }
+    private class ActivitySwitch implements PopupMenu.OnMenuItemClickListener{
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            runActivity(view.getResources().getResourceName(item.getItemId()));
+            return false;
+        }
+
+        private void runActivity(String name){
+            Intent myIntent = null;
+            switch (name){
+                case "com.jrcw.expensemonitor:id/menuExpenses":
+                    myIntent = new Intent(view, ExpenseEntryActivity.class);
+                    break;
+                case "com.jrcw.expensemonitor:id/menuLimits":
+                    myIntent = new Intent(view, LimitsActivity.class);
+                    break;
+                case "com.jrcw.expensemonitor:id/menuStatistics":
+                    myIntent = new Intent(view, Statistics.class);
+                    break;
+                default:
+                    toastError("Nieznana funkcja menu");
+            }
+            if(myIntent != null){
+                view.startActivity(myIntent);
+            }
+        }
     }
 
 
@@ -146,7 +178,13 @@ public class LimitsActivityController {
             }
         }
     }
+    private class ButtonFunctionListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            showPopup(v, view);
 
+        }
+    }
     private class ProduktyOnClickListener implements View.OnClickListener {
 
         @Override
@@ -159,11 +197,21 @@ public class LimitsActivityController {
 
     private class UstawOnClickListener implements View.OnClickListener {
 
+
         @Override
         public void onClick(View v) {
+            try {
+                if(model.isMinimalDataSet()){
+       //             model.storeExpense();
+       //             clear();
+                }
+            } catch (Exception e) {
+       //         handleMinimalaDataS(e);
+            }
+        }
 
         }
-    }
+
 
     private class EdytujOnClickListener implements View.OnClickListener {
 
@@ -297,30 +345,41 @@ public class LimitsActivityController {
         }
     }
 
-    private class OdEditTextListener implements View.OnClickListener {
+    private class OdEditTextListener implements TextWatcher {
+
 
         @Override
-        public void onClick(View v) {
-            try {
-                String txt = view.getEditTextByName("DataOd").getText().toString();
-                Date OD = Date.valueOf(txt);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
 
         }
     }
 
-    private class DoEditTextListener implements View.OnClickListener {
+    private class DoEditTextListener implements TextWatcher {
+
 
         @Override
-        public void onClick(View v) {
-            try {
-                String txt = view.getEditTextByName("DataDo").getText().toString();
-                Date DO = Date.valueOf(txt);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 
@@ -365,6 +424,7 @@ public class LimitsActivityController {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             int categoryId = ((Category)parent.getItemAtPosition(position)).getId();
             model.setCategoryId(categoryId);
+            setAdapterProducts();
         }
 
         @Override
@@ -377,8 +437,9 @@ public class LimitsActivityController {
         @Override
         public void dataUpdated(PopupWindowType source) {
             switch(source){
-                case PLACE:
-
+                case PRODUCT:
+                    model.updateProducts();
+                    setAdapterProducts();
                     break;
                 case CATEGORY:
                     model.updateCategories();
@@ -389,4 +450,102 @@ public class LimitsActivityController {
             }
         }
     }
+    private class TextDateWatcher implements TextWatcher{
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+    private boolean isSeparator(char a){
+        if(a == '-' || a == '/' || a == '.') return true;
+        return false;
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        String date = s.toString();
+        boolean dd = false;
+        boolean mm = false;
+        boolean yy = false;
+        char sep = 0;
+        int fsl = 0;
+
+        if(date.length() > 0) dd = true;
+        for(int i = 0; i < date.length(); i++){
+            char ch = date.charAt(i);
+            if(isSeparator(ch)){
+                if(dd && !mm){
+                    sep = ch;
+                    fsl = i;
+                    int day = Integer.parseInt(date.substring(0, i));
+                    if(day > 31){
+                        toastError("Miesiąc ma maksymalnie 31 dni");
+                        s.clear();
+                        break;
+                    }else if(day < 1){
+                        toastError("Miesiąc zaczyna się od 1-ego");
+                        s.clear();
+                        break;
+                    }else{
+                        mm = true;
+                    }
+                }else if(dd && mm){
+                    if(sep != ch){
+                        date.replace(ch, sep);
+                        s.clear();
+                        s.insert(0, date);
+                    }
+                    yy = true;
+                }else if(dd && mm && yy){
+                    s.clear();
+                    s.insert(0, date.substring(0, i-1));
+                    toastError("Niepoprawna data");
+                    break;
+                }
+            }
+            if(dd && mm && !yy){
+                if(i-1 > fsl) {
+                    int month = Integer.parseInt(date.substring(fsl+1, i+1));
+                    if (month > 12) {
+                        toastError("Rok ma maksymalnie 12 miesięcy");
+                    } else if (fsl - i == 2) {
+                        if (month < 1) toastError("Nieprawidłowy miesiąc");
+                        s.clear();
+                        s.insert(0, date.substring(0, fsl));
+                        break;
+                    }
+                }
+            }
+        }
+        model.setFromField(s.toString());
+
+    }
+
+
+
+
+        private void handleMinimalaDataSetExceptions(Exception e) {
+            switch (e.getMessage()){
+                case "Bad day field":
+                    toastError("Nie udało się przetworzyć dnia w dacie");
+                    break;
+                case "Bad month field":
+                    toastError("Nie udało się przetworzyć miesiąca w dacie");
+                    break;
+                case "Bad year field":
+                    toastError("Nie udało się przetworzyć roku w dacie");
+                    break;
+                case "separator":
+                    toastError("Nieprawdidłowy czas lub data");
+                    break;
+                case "No date":
+                    toastError("Brak daty");
+                    break;
+                default:
+                    toastError("Nieznany błąd");
+            }
+        }
 }
+
