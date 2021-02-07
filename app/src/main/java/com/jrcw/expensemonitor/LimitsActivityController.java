@@ -71,7 +71,7 @@ public class LimitsActivityController {
     }
 
     private void setAdapterCurrencies() {
-        ((Spinner) view.findViewById(R.id.spCurrency)).setAdapter(model.getCurrencyAdapter(view));
+        ((Spinner) view.findViewById(R.id.spCurrencyLimits)).setAdapter(model.getCurrencyAdapter(view));
     }
 
     private void setAdapterProducts() {

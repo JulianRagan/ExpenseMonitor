@@ -24,7 +24,7 @@ public class LimitsActivityModel extends BasicModel{
 
     }
     @Override
-    void fetchData() {
+    protected void fetchData() {
         fetchCategories();
         fetchProducts();
         fetchCurrencies();
