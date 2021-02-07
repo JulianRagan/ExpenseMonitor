@@ -102,4 +102,8 @@
     <string name="hintNoteReminderSettings">Notatka</string>
     <string name="btnSetReminderSettigns">Ustaw</string>
     <string name="btnCancelReminderSettings">Anuluj</string>
+    <string name="btnPodzialWydatkow">Podział wydatków</string>
+    <string name="btnChangePrice">Zmiana Cen</string>
+    <string name="btnOverruns">Przekroczenia</string>
+    <string name="btnChooseFunction">Wybierz Fukcje</string>
 </resources>
