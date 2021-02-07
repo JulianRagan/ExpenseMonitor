@@ -1,0 +1,110 @@
+package com.jrcw.expensemonitor.popupWindows;
+
+import android.content.Context;
+
+import com.jrcw.expensemonitor.BasicModel;
+import com.jrcw.expensemonitor.containers.Currency;
+import com.jrcw.expensemonitor.db.DatabaseAccess;
+import com.jrcw.expensemonitor.db.InsertBuilder;
+
+import java.util.Date;
+
+public class AddDetailPopupModel extends BasicModel {
+    private int categoryId;
+    private int productId;
+    private int unitId;
+    private int currencyId;
+    private double amount;
+    private double quantity;
+    private String amountField;
+    private String quantityField;
+    private Date entryDate;
+
+    public AddDetailPopupModel(Context context, Date entryDate) {
+        super(context);
+        this.entryDate = entryDate;
+    }
+
+    @Override
+    protected void fetchData() {
+        fetchCategories();
+        fetchCurrencies();
+        fetchProducts();
+        fetchUnits();
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public void setUnitId(int unitId) {
+        this.unitId = unitId;
+    }
+
+    public void setCurrencyId(int currencyId) {
+        this.currencyId = currencyId;
+    }
+
+    public void setAmountField(String amountField) {
+        this.amountField = amountField;
+    }
+
+    public void setQuantityField(String quantityField) {
+        this.quantityField = quantityField;
+    }
+
+    public boolean isMinimalDataSet() throws Exception{
+        if(amountField != null && quantityField != null){
+            try {
+                amount = Double.parseDouble(amountField);
+            }catch (NumberFormatException e){
+                throw new Exception("Amount");
+            }
+            try{
+                quantity = Double.parseDouble(quantityField);
+            }catch (NumberFormatException e){
+                throw new Exception("Quantity");
+            }
+        }
+        return true;
+    }
+
+    public void clear() {
+        amountField = "";
+        quantityField = "";
+    }
+
+    public double getExchangeRate(){
+        for(Currency c:getCurrencies()){
+            if(c.getId() == currencyId){
+                return c.getExchangeRate();
+            }
+        }
+        return 1.00;
+    }
+
+    public void storeDetail(){
+        DatabaseAccess dba = new DatabaseAccess(context);
+        dba.open();
+        try {
+            InsertBuilder ib = new InsertBuilder("ExpenseDetail", "time", entryDate, null);
+            ib.addFieldAndData("Product_id", productId, null);
+            ib.addFieldAndData("Category_id", categoryId, null);
+            ib.addFieldAndData("Quantity", quantity, "Decimal3");
+            ib.addFieldAndData("UnitOfMeasure_id", unitId, null);
+            ib.addFieldAndData("Amount", amount, "Decimal2");
+            ib.addFieldAndData("Currency_id", currencyId, null);
+            ib.addFieldAndData("ExchangeRate", getExchangeRate(), "Decimal2");
+            dba.executeQuery(ib.getQry());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            dba.close();
+        }
+
+    }
+}

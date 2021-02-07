@@ -19,11 +19,11 @@ import com.jrcw.expensemonitor.containers.UpdateDataListener;
 import java.util.List;
 
 public class AddPlacePopupController {
-    View view;
-    PopupWindow window;
-    AddPlacePopupModel model;
-    Context context;
-    UpdateDataListener listener;
+    private View view;
+    private PopupWindow window;
+    private AddPlacePopupModel model;
+    private Context context;
+    private UpdateDataListener listener;
 
 
     public AddPlacePopupController(View view, PopupWindow w, Context c, List<Place>places){

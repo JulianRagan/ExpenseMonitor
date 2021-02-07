@@ -17,8 +17,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.PopupMenu;
 
+import com.jrcw.expensemonitor.containers.Category;
+import com.jrcw.expensemonitor.containers.Currency;
+import com.jrcw.expensemonitor.containers.Place;
 import com.jrcw.expensemonitor.containers.UpdateDataListener;
 import com.jrcw.expensemonitor.popupWindows.AddCategoryPopupController;
+import com.jrcw.expensemonitor.popupWindows.AddDetailPopupController;
 import com.jrcw.expensemonitor.popupWindows.AddPlacePopupController;
 
 import java.text.ParseException;
@@ -73,23 +77,56 @@ public class ExpenseEntryController {
         Toast.makeText(view, msg, Toast.LENGTH_LONG).show();
     }
 
+
+    private void handleMinimalaDataSetExceptions(Exception e) {
+        switch (e.getMessage()){
+            case "Bad hours field":
+                toastError("Nie udało się przetworzyć godziny, sprawdź czas");
+                break;
+            case "Bad minutes field":
+                toastError("Nie udało się przetworzyć minut, sprawdź czas");
+                break;
+            case "Bad seconds field":
+                toastError("Nie udało się przetworzyć sekund, sprawdź czas");
+                break;
+            case "Bad day field":
+                toastError("Nie udało się przetworzyć dnia w dacie");
+                break;
+            case "Bad month field":
+                toastError("Nie udało się przetworzyć miesiąca w dacie");
+                break;
+            case "Bad year field":
+                toastError("Nie udało się przetworzyć roku w dacie");
+                break;
+            case "separator":
+                toastError("Nieprawdidłowy czas lub data");
+                break;
+            case "No date":
+                toastError("Brak daty");
+                break;
+            default:
+                toastError("Nieznany błąd");
+        }
+    }
+
+
     private void showPopupWindow(PopupWindowType pwt, View v){
         LayoutInflater inflater = (LayoutInflater) view.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View pview = null;
+        View pview;
         switch(pwt){
             case PLACE:
-                //pview = inflater.inflate(R.layout.addition_place, null);
                 pview = inflater.inflate(R.layout.addition_place_simple, null);
                 break;
             case CATEGORY:
                 pview = inflater.inflate(R.layout.addition_category, null);
                 break;
+            case DETAILS:
+                pview = inflater.inflate(R.layout.details_panel, null);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
         }
-//        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
-//        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
         boolean focusable = true;
         PopupWindow popupWindow = new PopupWindow(pview, width, height, focusable);
@@ -104,6 +141,8 @@ public class ExpenseEntryController {
                         view, model.getCategories());
                 cc.setUpdateDataListener(new PopupUpdateDataListener());
                 break;
+            case DETAILS:
+                new AddDetailPopupController(pview, popupWindow, view, model.getTimeOfTransaction());
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
         }
@@ -154,7 +193,14 @@ public class ExpenseEntryController {
 
         @Override
         public void onClick(View v) {
-
+            try {
+                if(model.isMinimalDataSetForDetails()){
+                    model.storeForDetails();
+                    showPopupWindow(PopupWindowType.DETAILS, v);
+                }
+            } catch (Exception e) {
+                handleMinimalaDataSetExceptions(e);
+            }
         }
     }
 
@@ -191,9 +237,11 @@ public class ExpenseEntryController {
                         if(day > 31){
                             toastError("Miesiąc ma maksymalnie 31 dni");
                             s.clear();
+                            break;
                         }else if(day < 1){
                             toastError("Miesiąc zaczyna się od 1-ego");
                             s.clear();
+                            break;
                         }else{
                             mm = true;
                         }
@@ -220,10 +268,12 @@ public class ExpenseEntryController {
                             if (month < 1) toastError("Nieprawidłowy miesiąc");
                             s.clear();
                             s.insert(0, date.substring(0, fsl));
+                            break;
                         }
                     }
                 }
             }
+            model.setDateString(s.toString());
         }
     }
 
@@ -294,47 +344,65 @@ public class ExpenseEntryController {
             boolean ss = false;
             char sep = 0;
             int fsl = 0;
-
-            String date = s.toString();
-            boolean dd = false;
-            boolean yy = false;
+            int ssl = 0;
 
             if (time.length() > 0) hh = true;
-            for(int i = 0; i < date.length(); i++) {
-                char ch = date.charAt(i);
+            for(int i = 0; i < time.length(); i++) {
+                char ch = time.charAt(i);
                 if (isSeparator(ch)) {
                     if (hh && !mm) {
                         sep = ch;
                         fsl = i;
-                        int hour = Integer.parseInt(time.substring(0, i - 1));
-                        if (hour > 23 || hour < 0) {
+                        String str = time.substring(0, i);
+                        int hour = Integer.parseInt(time.substring(0, i));
+                        if (hour > 23) {
                             toastError("Podaj godzinę w przedziale 0 - 23");
                             s.clear();
+                            break;
+                        } else if (hour < 0) {
+                            toastError("Podaj godzinę w przedziale 0 - 23");
+                            s.clear();
+                            break;
                         } else {
                             mm = true;
                         }
-                    } else if (dd && mm) {
+                    } else if (hh && mm && !ss) {
                         if (sep != ch) {
-                            date.replace(ch, sep);
+                            time.replace(ch, sep);
                             s.clear();
                             s.insert(0, time);
+                            break;
                         }
-                        int minute = Integer.parseInt(time.substring(fsl+1, i-1));
-                        if(minute > 59 || minute < 0){
+                        int minute = Integer.parseInt(time.substring(fsl+1, i));
+                        if (minute > 59 || minute < 0) {
                             s.clear();
-                            s.insert(0, time.substring(0, fsl));
+                            s.insert(0, time.substring(0, fsl + 1));
                             toastError("Podaj minuty w zakresie 0 - 59");
-                        }else {
+                            break;
+                        } else {
                             ss = true;
+                            ssl = i;
                         }
                     } else if (hh && mm && ss) {
                         s.clear();
-                        s.insert(0, time.substring(0, i - 1));
+                        s.insert(0, time.substring(0, i));
                         toastError("Niepoprawny czas");
                         break;
                     }
                 }
+                if(hh && mm && ss){
+                    if((i - 1 - ssl)>0){
+                        int second = Integer.parseInt(time.substring(ssl+1, i+1));
+                        if(second > 59 || second < 0){
+                            s.clear();
+                            s.insert(0, time.substring(0, ssl+1));
+                            toastError("Podaj minuty w zakresie 0 - 59");
+                            break;
+                        }
+                    }
+                }
             }
+            model.setTimeString(s.toString());
         }
 
         private boolean isSeparator(char a) {
@@ -353,7 +421,12 @@ public class ExpenseEntryController {
 
         @Override
         public void afterTextChanged(Editable s) {
-
+            try{
+                double d = Double.parseDouble(s.toString());
+                model.setExpenditureTotal(d);
+            }catch (NumberFormatException e){
+                toastError("Nieprawidłowa kwota");
+            }
         }
     }
 
@@ -367,7 +440,7 @@ public class ExpenseEntryController {
 
         @Override
         public void afterTextChanged(Editable s) {
-
+            model.setDescription(s.toString());
         }
     }
 
@@ -375,39 +448,36 @@ public class ExpenseEntryController {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            int pid = ((Place)parent.getItemAtPosition(position)).getId();
+            model.setPlaceId(pid);
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
     private class CategorySelectedItemListener implements AdapterView.OnItemSelectedListener{
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            int cid = ((Category)parent.getItemAtPosition(position)).getId();
+            model.setCategoryId(cid);
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
     private class CurrencySelectedItemListener implements AdapterView.OnItemSelectedListener{
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            int cid = ((Currency)parent.getItemAtPosition(position)).getId();
+            model.setCurrencyId(cid);
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
     private class PopupUpdateDataListener implements UpdateDataListener{

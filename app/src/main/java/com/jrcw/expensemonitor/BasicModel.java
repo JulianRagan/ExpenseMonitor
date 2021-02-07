@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
 
 public abstract class BasicModel {
     private DatabaseAccess dba;
-    private Context context;
+    protected Context context;
     private List<Place> places;
     private List<Product> products;
     private List<Category> categories;
@@ -36,7 +36,7 @@ public abstract class BasicModel {
         fetchData();
     }
 
-    abstract void fetchData();
+    protected abstract void fetchData();
 
     protected void fetchCategories(){
         dba = dba.open();
