@@ -19,11 +19,11 @@ import com.jrcw.expensemonitor.containers.UpdateDataListener;
 import java.util.List;
 
 public class AddCategoryPopupController {
-    View view;
-    PopupWindow window;
-    AddCategoryPopupModel model;
-    Context context;
-    UpdateDataListener listener;
+    private View view;
+    private PopupWindow window;
+    private AddCategoryPopupModel model;
+    private Context context;
+    private UpdateDataListener listener;
 
 
     public AddCategoryPopupController(View view, PopupWindow w, Context c, List<Category> categories){

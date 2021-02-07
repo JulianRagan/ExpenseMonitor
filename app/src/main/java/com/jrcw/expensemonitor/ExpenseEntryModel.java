@@ -21,7 +21,7 @@ public class ExpenseEntryModel extends BasicModel{
     }
 
     @Override
-    void fetchData() {
+    protected void fetchData() {
         fetchCurrencies();
         fetchCategories();
         fetchPlaces();
@@ -50,8 +50,32 @@ public class ExpenseEntryModel extends BasicModel{
         return expenditureTotal;
     }
 
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getCurrencyId() {
+        return currencyId;
+    }
+
+    public int getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(int placeId) {
+        this.placeId = placeId;
+    }
+
     public void setExpenditureTotal(double expenditureTotal) {
         this.expenditureTotal = expenditureTotal;
+    }
+
+    public Date getTimeOfTransaction() {
+        return timeOfTransaction;
     }
 
     public String getDescription() {
@@ -151,5 +175,13 @@ public class ExpenseEntryModel extends BasicModel{
             return "/";
         }
         throw new Exception("separator");
+    }
+
+    public void storeExpense(){
+
+    }
+
+    public void storeForDetails(){
+
     }
 }
