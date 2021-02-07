@@ -1,13 +1,24 @@
 package com.jrcw.expensemonitor;
 
 import android.content.Intent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.PopupMenu;
+
+import com.jrcw.expensemonitor.popupWindows.AddCategoryPopupController;
+import com.jrcw.expensemonitor.popupWindows.AddDetailPopupController;
+import com.jrcw.expensemonitor.popupWindows.AddPlacePopupController;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class StatisticsController {
     private Statistics view;
@@ -22,7 +33,7 @@ public class StatisticsController {
 
     private void initControls() {
         ((Button)view.findViewById(R.id.btnChooseFunction)).setOnClickListener(new ChooseFunctionOnClickListener());
-        ((Button)view.findViewById(R.id.btnDevisionExpense)).setOnClickListener(new DevisionExpenseOnClickListener());
+        ((Button)view.findViewById(R.id.btnDevisionExpense)).setOnClickListener(new DivisionExpenseOnClickListener());
         ((Button)view.findViewById(R.id.btnChangePrice)).setOnClickListener(new  ChangePriceOnClickListener());
         ((Button)view.findViewById(R.id.btnOverrun)).setOnClickListener(new OverrunOnClickListener());
     }
@@ -69,6 +80,40 @@ public class StatisticsController {
         }
     }
 
+    private void showPopupWindow(PopupWindowType pwt, View v){
+        LayoutInflater inflater = (LayoutInflater) view.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View pview;
+        switch(pwt){
+            case STATS_EXPENSE_DISTR:
+                pview = inflater.inflate(R.layout.statistics_expense_distribution, null);
+                break;
+            case STATS_PRICE_VARIATION:
+                pview = inflater.inflate(R.layout.statistics_price_variation, null);
+                break;
+            case STATS_EXCEED_LIMITS:
+                pview = inflater.inflate(R.layout.statistics_exceed_limits, null);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + pwt);
+        }
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(pview, width, height, focusable);
+        switch(pwt){
+            case STATS_EXPENSE_DISTR:
+                break;
+            case STATS_PRICE_VARIATION:
+                break;
+            case STATS_EXCEED_LIMITS:
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + pwt);
+        }
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        popupWindow.showAtLocation(v, Gravity.CENTER, 0,0);
+    }
+
     private class ChooseFunctionOnClickListener implements View.OnClickListener{
 
         @Override
@@ -77,7 +122,7 @@ public class StatisticsController {
 
         }
     }
-    private class DevisionExpenseOnClickListener implements View.OnClickListener{
+    private class DivisionExpenseOnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
 
