@@ -13,7 +13,7 @@ public class LimitsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_limits);
-        new LimitsActivityController(this, new LimitsActivityModel());
+        new LimitsActivityController(this, new LimitsActivityModel(this));
     }
 
     public Button getButtonByName(String name) throws Exception {

@@ -83,7 +83,7 @@
         android:id="@+id/seekFundusze"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="44dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
@@ -134,7 +134,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:text="@string/btnDateProduct"
+        android:text="@string/btnCancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnSet"
         app:layout_constraintTop_toBottomOf="@+id/etTo" />
@@ -178,13 +178,12 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:autofillHints="no"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/spCurrencyLimits"
         app:layout_constraintStart_toEndOf="@+id/seekFundusze"
         app:layout_constraintTop_toBottomOf="@+id/lblFunds" />
 
@@ -286,5 +285,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/spProduct"
         app:layout_constraintTop_toBottomOf="@+id/spCategory" />
+
+    <Spinner
+        android:id="@+id/spCurrencyLimits"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etFunds"
+        app:layout_constraintTop_toBottomOf="@+id/lblFunds" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
