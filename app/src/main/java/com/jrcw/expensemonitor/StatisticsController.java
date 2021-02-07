@@ -31,7 +31,7 @@ public class StatisticsController {
     }
 
     private class ChooseFunctionOnClickListener implements View.OnClickListener{
-        
+
         @Override
         public void onClick(View v ) {
 
