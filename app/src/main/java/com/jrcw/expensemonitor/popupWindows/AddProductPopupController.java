@@ -143,8 +143,8 @@ public class AddProductPopupController {
                     if (!model.productExists()) {
                         if (model.isMinimalDataSet()) {
                             model.storeProduct(context);
-                            listener.dataUpdated(PopupWindowType.PRODUCT);
                             window.dismiss();
+                            listener.dataUpdated(PopupWindowType.PRODUCT);
                         } else {
                             toastError("Należy podać nazwę produktu");
                         }
@@ -155,8 +155,8 @@ public class AddProductPopupController {
                 case "zachowaj":
                     if (model.isMinimalDataSet()) {
                         model.updateProduct(context);
-                        listener.dataUpdated(PopupWindowType.PRODUCT);
                         window.dismiss();
+                        listener.dataUpdated(PopupWindowType.PRODUCT);
                     }
                     break;
             }

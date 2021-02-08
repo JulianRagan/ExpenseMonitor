@@ -17,6 +17,13 @@ import java.util.List;
 public class StatisticsModel extends BasicModel{
     private List<Expense> expenses;
     private List<ExpenseDetail> details;
+    private String fromField;
+    private String toField;
+    private Date from;
+    private Date to;
+    private int categoryId;
+    private int productId;
+    private int placeId;
 
     public StatisticsModel(Context context) {
         super(context);
@@ -30,6 +37,26 @@ public class StatisticsModel extends BasicModel{
         fetchProducts();
         fetchUnits();
         fetchExpenses();
+    }
+
+    public void setFromField(String fromField) {
+        this.fromField = fromField;
+    }
+
+    public void setToField(String toField) {
+        this.toField = toField;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public void setPlaceId(int placeId) {
+        this.placeId = placeId;
     }
 
     private void fetchExpenses(){

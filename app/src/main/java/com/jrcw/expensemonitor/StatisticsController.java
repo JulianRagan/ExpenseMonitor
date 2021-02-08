@@ -118,14 +118,13 @@ public class StatisticsController {
 
         @Override
         public void onClick(View v ) {
-
-
+            showPopup(v, view);
         }
     }
     private class DivisionExpenseOnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-
+            showPopupWindow(PopupWindowType.STATS_EXPENSE_DISTR, v);
         }
     }
     private class ChangePriceOnClickListener implements View.OnClickListener{

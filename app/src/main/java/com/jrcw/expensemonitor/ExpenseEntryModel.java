@@ -31,6 +31,8 @@ public class ExpenseEntryModel extends BasicModel{
         fetchCurrencies();
         fetchCategories();
         fetchPlaces();
+        fetchUnits();
+        fetchProducts();
         if(getCategories().size() > 0) categoryId = getCategories().get(0).getId();
         if(getCurrencies().size() > 0) currencyId = getCurrencies().get(0).getId();
         if(getPlaces().size() > 0) placeId = getPlaces().get(0).getId();
