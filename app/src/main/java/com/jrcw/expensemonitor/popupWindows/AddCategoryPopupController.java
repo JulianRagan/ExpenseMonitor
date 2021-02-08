@@ -31,14 +31,14 @@ public class AddCategoryPopupController {
         this.model = new AddCategoryPopupModel(categories);
         this.window = w;
         this.context = c;
-        initControlls();
+        initControls();
     }
 
     public void setUpdateDataListener(UpdateDataListener listener){
         this.listener = listener;
     }
 
-    private void initControlls(){
+    private void initControls(){
         ((EditText)view.findViewById(R.id.txtNameCategory)).addTextChangedListener(new NameTextWatcher());
         ((EditText)view.findViewById(R.id.txtDescriptionCategory)).addTextChangedListener(new DescriptionTextWatcher());
         ((Button)view.findViewById(R.id.btnAdditionNewCategory)).setOnClickListener(new AddCategoryOnClickListener());

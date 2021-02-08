@@ -3,27 +3,36 @@ package com.jrcw.expensemonitor.popupWindows;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.jrcw.expensemonitor.PopupWindowType;
 import com.jrcw.expensemonitor.R;
 import com.jrcw.expensemonitor.containers.Category;
 import com.jrcw.expensemonitor.containers.Currency;
 import com.jrcw.expensemonitor.containers.Product;
 import com.jrcw.expensemonitor.containers.UnitOfMeasure;
+import com.jrcw.expensemonitor.containers.UpdateDataListener;
 
 import java.util.Date;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class AddDetailPopupController {
     View view;
     PopupWindow window;
     AddDetailPopupModel model;
     Context context;
+    UpdateDataListener listener;
 
     public AddDetailPopupController(View view, PopupWindow w, Context c, Date entryDate){
         this.view = view;
@@ -33,9 +42,17 @@ public class AddDetailPopupController {
         InitControls();
     }
 
+    public void setUpdateDataListener(UpdateDataListener listener){
+        this.listener = listener;
+    }
+
     private void InitControls(){
         ((Button)view.findViewById(R.id.btnAddExpenseDetails)).setOnClickListener(
                 new AddExpenseOnClickListener());
+        ((Button)view.findViewById(R.id.btnAddCategoryCostDetails)).setOnClickListener(
+                new AddCategoryOnClickListener());
+        ((Button)view.findViewById(R.id.btnAddProductExpenseDetails)).setOnClickListener(
+                new AddProductOnClickListener());
         ((Button)view.findViewById(R.id.btnEndExpenseDetails)).setOnClickListener(
                 new EndExpenseOnClickListener());
         ((Spinner)view.findViewById(R.id.spCategoryCostDetails)).setOnItemSelectedListener(
@@ -67,11 +84,6 @@ public class AddDetailPopupController {
                 model.getProductsAdapter(context, categoryName));
     }
 
-    private void setAdapterProducts(String categoryName){
-        ((Spinner)view.findViewById(R.id.spProducts)).setAdapter(model.getProductsAdapter(
-                context, categoryName));
-    }
-
     private void setAdapterUnits(){
         ((Spinner)view.findViewById(R.id.spUnit)).setAdapter(model.getUnitsAdapter(context));
         int uid = ((Product)((Spinner)view.findViewById(R.id.spProducts)).getSelectedItem())
@@ -98,6 +110,45 @@ public class AddDetailPopupController {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
+    private void showPopupWindow(PopupWindowType pwt, View v){
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View pview;
+        switch(pwt){
+            case PLACE:
+                pview = inflater.inflate(R.layout.addition_place_simple, null);
+                break;
+            case CATEGORY:
+                pview = inflater.inflate(R.layout.addition_category, null);
+                break;
+            case DETAILS:
+                pview = inflater.inflate(R.layout.details_panel, null);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + pwt);
+        }
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(pview, width, height, focusable);
+        switch(pwt){
+            case CATEGORY:
+                AddCategoryPopupController cc = new AddCategoryPopupController(pview, popupWindow,
+                        context, model.getCategories());
+                cc.setUpdateDataListener(new PopupUpdateDataListener());
+                break;
+            case PRODUCT:
+                AddProductPopupController pc = new AddProductPopupController(pview, popupWindow,
+                        context, model.getCategories(), model.getUnits(), model.getProducts());
+                pc.setUpdateDataListener(new PopupUpdateDataListener());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + pwt);
+        }
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        popupWindow.showAtLocation(v, Gravity.CENTER, 0,0);
+    }
+
+
     private class AddExpenseOnClickListener implements View.OnClickListener{
 
         @Override
@@ -119,6 +170,20 @@ public class AddDetailPopupController {
                         toastError("Nieznany błąd");
                 }
             }
+        }
+    }
+
+    private class AddCategoryOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            showPopupWindow(PopupWindowType.CATEGORY, v);
+        }
+    }
+
+    private class AddProductOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            showPopupWindow(PopupWindowType.PRODUCT, v);
         }
     }
 
@@ -164,6 +229,7 @@ public class AddDetailPopupController {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             int cid = ((Category)parent.getItemAtPosition(position)).getId();
             model.setCategoryId(cid);
+            setAdapterProducts();
         }
 
         @Override
@@ -176,6 +242,7 @@ public class AddDetailPopupController {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             int pid = ((Product)parent.getItemAtPosition(position)).getId();
             model.setProductId(pid);
+            setAdapterUnits();
         }
 
         @Override
@@ -204,5 +271,24 @@ public class AddDetailPopupController {
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
+    }
+
+    private class PopupUpdateDataListener implements UpdateDataListener{
+
+        @Override
+        public void dataUpdated(PopupWindowType source) {
+            switch (source){
+                case PRODUCT:
+                    model.updateProducts();
+                    setAdapterProducts();
+                    break;
+                case CATEGORY:
+                    model.updateCategories();
+                    setAdapterCategories();
+                    listener.dataUpdated(source);
+                    break;
+
+            }
+        }
     }
 }
