@@ -111,6 +111,7 @@ public class ExpenseEntryController {
                 break;
             case "Exists":
                 toastError("Dla podanego czasu jest już zachowany zakup");
+                break;
             default:
                 toastError("Nieznany błąd");
                 e.printStackTrace();
@@ -150,7 +151,9 @@ public class ExpenseEntryController {
                 cc.setUpdateDataListener(new PopupUpdateDataListener());
                 break;
             case DETAILS:
-                new AddDetailPopupController(pview, popupWindow, view, model.getTimeOfTransaction());
+                AddDetailPopupController dc = new AddDetailPopupController(pview, popupWindow, view,
+                        model.getTimeOfTransaction());
+                dc.setUpdateDataListener(new PopupUpdateDataListener());
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
@@ -482,8 +485,10 @@ public class ExpenseEntryController {
         @Override
         public void afterTextChanged(Editable s) {
             try{
-                double d = Double.parseDouble(s.toString());
-                model.setExpenditureTotal(d);
+                if(!s.toString().contentEquals("")) {
+                    double d = Double.parseDouble(s.toString());
+                    model.setExpenditureTotal(d);
+                }
             }catch (NumberFormatException e){
                 toastError("Nieprawidłowa kwota");
             }

@@ -1,12 +1,14 @@
 package com.jrcw.expensemonitor.popupWindows;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import com.jrcw.expensemonitor.BasicModel;
 import com.jrcw.expensemonitor.containers.Currency;
 import com.jrcw.expensemonitor.db.DatabaseAccess;
 import com.jrcw.expensemonitor.db.InsertBuilder;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddDetailPopupModel extends BasicModel {
@@ -90,8 +92,10 @@ public class AddDetailPopupModel extends BasicModel {
     public void storeDetail(){
         DatabaseAccess dba = new DatabaseAccess(context);
         dba.open();
+        int id = getNextDetailId(dba);
         try {
             InsertBuilder ib = new InsertBuilder("ExpenseDetail", "time", entryDate, null);
+            ib.addFieldAndData("id",id,null);
             ib.addFieldAndData("Product_id", productId, null);
             ib.addFieldAndData("Category_id", categoryId, null);
             ib.addFieldAndData("Quantity", quantity, "Decimal3");
@@ -106,5 +110,17 @@ public class AddDetailPopupModel extends BasicModel {
             dba.close();
         }
 
+    }
+
+    private int getNextDetailId(DatabaseAccess dba){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String qry = "SELECT MAX(id) AS id FROM ExpenseDetail WHERE time = '" + sdf.format(entryDate) + "';";
+        int retval = 0;
+        Cursor rs = dba.fetchAny(qry);
+        if(rs.moveToFirst()){
+            retval = rs.getInt(rs.getColumnIndex("id"));
+        }
+        rs.close();
+        return retval+1;
     }
 }

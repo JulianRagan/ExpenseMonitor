@@ -175,7 +175,8 @@ public class ExpenseEntryModel extends BasicModel{
         try{
             if(oldPlaceId == 0) {
                 dba.executeQuery(insertExpense());
-                dba.executeQuery(insertBasicDetail());
+                int id = getNextDetailId(dba);
+                dba.executeQuery(insertBasicDetail(id));
             }else {
                 throw new Exception("Exists");
             }
@@ -192,7 +193,8 @@ public class ExpenseEntryModel extends BasicModel{
             if(oldPlaceId == 0) {
                 dba.executeQuery(insertExpense());
                 if (expenditureTotal > 0.0) {
-                    dba.executeQuery(insertBasicDetail());
+                    int id = getNextDetailId(dba);
+                    dba.executeQuery(insertBasicDetail(id));
                 }
             }else if(oldPlaceId != placeId){
                 throw new Exception("Bad place");
@@ -222,8 +224,9 @@ public class ExpenseEntryModel extends BasicModel{
         return ib.getQry();
     }
 
-    private String insertBasicDetail() throws Exception {
+    private String insertBasicDetail(int id) throws Exception {
         InsertBuilder ib = new InsertBuilder("ExpenseDetail", "time", timeOfTransaction, null);
+        ib.addFieldAndData("id", id, null);
         ib.addFieldAndData("Category_id", categoryId, null);
         ib.addFieldAndData("Amount", expenditureTotal, "Decimal2");
         ib.addFieldAndData("Currency_id", currencyId, null);
@@ -233,7 +236,7 @@ public class ExpenseEntryModel extends BasicModel{
 
     private int checkEntry(DatabaseAccess dba){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String qry = "SELECT Place_id FROM Expense WHERE " + sdf.format(timeOfTransaction) + ";";
+        String qry = "SELECT Place_id FROM Expense WHERE time = '" + sdf.format(timeOfTransaction) + "';";
         int retval = 0;
         Cursor rs = dba.fetchAny(qry);
         if(rs.moveToFirst()){
@@ -242,4 +245,17 @@ public class ExpenseEntryModel extends BasicModel{
         rs.close();
         return retval;
     }
+
+    private int getNextDetailId(DatabaseAccess dba){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String qry = "SELECT MAX(id) AS id FROM ExpenseDetail WHERE time = '" + sdf.format(timeOfTransaction) + "';";
+        int retval = 0;
+        Cursor rs = dba.fetchAny(qry);
+        if(rs.moveToFirst()){
+            retval = rs.getInt(rs.getColumnIndex("id"));
+        }
+        rs.close();
+        return retval+1;
+    }
+
 }
