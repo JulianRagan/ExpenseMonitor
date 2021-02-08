@@ -59,6 +59,30 @@ public class AddDetailPopupModel extends BasicModel {
         this.quantityField = quantityField;
     }
 
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public int getUnitId() {
+        return unitId;
+    }
+
+    public int getCurrencyId() {
+        return currencyId;
+    }
+
+    public String getAmountField() {
+        return amountField;
+    }
+
+    public String getQuantityField() {
+        return quantityField;
+    }
+
     public boolean isMinimalDataSet() throws Exception{
         if(amountField != null && quantityField != null){
             try {

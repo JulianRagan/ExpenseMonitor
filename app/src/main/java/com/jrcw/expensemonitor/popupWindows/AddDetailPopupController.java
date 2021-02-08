@@ -19,6 +19,9 @@ import com.jrcw.expensemonitor.PopupWindowType;
 import com.jrcw.expensemonitor.R;
 import com.jrcw.expensemonitor.containers.Category;
 import com.jrcw.expensemonitor.containers.Currency;
+import com.jrcw.expensemonitor.containers.DetailContent;
+import com.jrcw.expensemonitor.containers.DetailEntryAction;
+import com.jrcw.expensemonitor.containers.EntryAction;
 import com.jrcw.expensemonitor.containers.Product;
 import com.jrcw.expensemonitor.containers.UnitOfMeasure;
 import com.jrcw.expensemonitor.containers.UpdateDataListener;
@@ -29,21 +32,23 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class AddDetailPopupController {
     View view;
+    View src;
     PopupWindow window;
     AddDetailPopupModel model;
     Context context;
-    UpdateDataListener listener;
+    DetailEntryAction action;
 
-    public AddDetailPopupController(View view, PopupWindow w, Context c, Date entryDate){
+    public AddDetailPopupController(View view, View src, PopupWindow w, Context c, Date entryDate){
         this.view = view;
         this.window = w;
         this.context = c;
+        this.src = src;
         model = new AddDetailPopupModel(c, entryDate);
         InitControls();
     }
 
-    public void setUpdateDataListener(UpdateDataListener listener){
-        this.listener = listener;
+    public void setDetailEntryAction (DetailEntryAction action){
+        this.action = action;
     }
 
     private void InitControls(){
@@ -110,44 +115,16 @@ public class AddDetailPopupController {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
-    private void showPopupWindow(PopupWindowType pwt, View v){
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View pview;
-        switch(pwt){
-            case PLACE:
-                pview = inflater.inflate(R.layout.addition_place_simple, null);
-                break;
-            case CATEGORY:
-                pview = inflater.inflate(R.layout.addition_category, null);
-                break;
-            case DETAILS:
-                pview = inflater.inflate(R.layout.details_panel, null);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + pwt);
-        }
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-        boolean focusable = true;
-        PopupWindow popupWindow = new PopupWindow(pview, width, height, focusable);
-        switch(pwt){
-            case CATEGORY:
-                AddCategoryPopupController cc = new AddCategoryPopupController(pview, popupWindow,
-                        context, model.getCategories());
-                cc.setUpdateDataListener(new PopupUpdateDataListener());
-                break;
-            case PRODUCT:
-                AddProductPopupController pc = new AddProductPopupController(pview, popupWindow,
-                        context, model.getCategories(), model.getUnits(), model.getProducts());
-                pc.setUpdateDataListener(new PopupUpdateDataListener());
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + pwt);
-        }
-        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        popupWindow.showAtLocation(v, Gravity.CENTER, 0,0);
+    private DetailContent storeContent(){
+        DetailContent dc = new DetailContent();
+        dc.setCategoryId(model.getCategoryId());
+        dc.setCurrencyId(model.getCurrencyId());
+        dc.setPrice(model.getAmountField());
+        dc.setQuantity(model.getQuantityField());
+        dc.setUnitId(model.getUnitId());
+        dc.setView(src);
+        return dc;
     }
-
 
     private class AddExpenseOnClickListener implements View.OnClickListener{
 
@@ -176,14 +153,18 @@ public class AddDetailPopupController {
     private class AddCategoryOnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            showPopupWindow(PopupWindowType.CATEGORY, v);
+            DetailContent dc = storeContent();
+            window.dismiss();
+            action.entryAction(EntryAction.ADD_CATEGORY,dc);
         }
     }
 
     private class AddProductOnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            showPopupWindow(PopupWindowType.PRODUCT, v);
+            DetailContent dc = storeContent();
+            window.dismiss();
+            action.entryAction(EntryAction.ADD_PRODUCT,dc);
         }
     }
 
@@ -192,6 +173,7 @@ public class AddDetailPopupController {
         @Override
         public void onClick(View v) {
             window.dismiss();
+            action.entryAction(EntryAction.END_ENTRY,null);
         }
     }
 
@@ -273,22 +255,4 @@ public class AddDetailPopupController {
         public void onNothingSelected(AdapterView<?> parent) {}
     }
 
-    private class PopupUpdateDataListener implements UpdateDataListener{
-
-        @Override
-        public void dataUpdated(PopupWindowType source) {
-            switch (source){
-                case PRODUCT:
-                    model.updateProducts();
-                    setAdapterProducts();
-                    break;
-                case CATEGORY:
-                    model.updateCategories();
-                    setAdapterCategories();
-                    listener.dataUpdated(source);
-                    break;
-
-            }
-        }
-    }
 }

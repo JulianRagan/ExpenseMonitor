@@ -85,9 +85,26 @@ public class LimitsActivityController {
                 model.getProductsAdapter(view, categoryName));
     }
 
-    private void setAdapterProducts(String Cat) {
-
-        ((Spinner) view.findViewById(R.id.spProduct)).setAdapter(model.getProductsAdapter(view, Cat));
+    private void handleMinimalaDataSetExceptions(Exception e) {
+        switch (e.getMessage()) {
+            case "Bad day field":
+                toastError("Nie udało się przetworzyć dnia w dacie");
+                break;
+            case "Bad month field":
+                toastError("Nie udało się przetworzyć miesiąca w dacie");
+                break;
+            case "Bad year field":
+                toastError("Nie udało się przetworzyć roku w dacie");
+                break;
+            case "separator":
+                toastError("Nieprawdidłowy czas lub data");
+                break;
+            case "No date":
+                toastError("Brak daty");
+                break;
+            default:
+                toastError("Nieznany błąd");
+        }
     }
 
     private void toastError(String msg) {
@@ -96,7 +113,7 @@ public class LimitsActivityController {
 
     private void showPopupWindow(PopupWindowType pwt, View v) {
         LayoutInflater inflater = (LayoutInflater) view.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View pview = null;
+        View pview;
         switch (pwt) {
             case PRODUCT:
                 pview = inflater.inflate(R.layout.addition_products, null);
@@ -133,8 +150,13 @@ public class LimitsActivityController {
         PopupMenu popup = new PopupMenu(view, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_function, popup.getMenu());
+        popup.getMenu().findItem(R.id.menuLimits).setEnabled(false);
         popup.setOnMenuItemClickListener(new ActivitySwitch());
         popup.show();
+    }
+
+    private void clear(){
+        ((CheckBox) view.findViewById(R.id.ckbCategory)).setOnClickListener(new CheckBoxListener());
     }
 
     private class ActivitySwitch implements PopupMenu.OnMenuItemClickListener {
@@ -171,11 +193,11 @@ public class LimitsActivityController {
 
         @Override
         public void onClick(View v) {
-            {
-                showPopupWindow(PopupWindowType.CATEGORY, v);
-
-
-            }
+            showPopupWindow(PopupWindowType.CATEGORY, v);
+            ((EditText)view.findViewById(R.id.etFunds)).setText("");
+            ((EditText)view.findViewById(R.id.etQuantity)).setText("");
+            ((EditText)view.findViewById(R.id.etFrom)).setText("");
+            ((EditText)view.findViewById(R.id.etTo)).setText("");
         }
     }
 
@@ -204,11 +226,11 @@ public class LimitsActivityController {
         public void onClick(View v) {
             try {
                 if (model.isMinimalDataSet()) {
-               //     model.storeExpense();
-             //      clear();
+                    model.storeLimit();
+                    clear();
                 }
             } catch (Exception e) {
-            //    handleMinimalaDataS(e);
+                handleMinimalaDataSetExceptions(e);
             }
         }
 
@@ -427,21 +449,16 @@ public class LimitsActivityController {
             if (a == ':' || a == ',' || a == '.') return true;
             return false;
         }
-
-
     }
+
     private class DoEditTextListener implements TextWatcher {
 
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -502,6 +519,7 @@ public class LimitsActivityController {
             model.setFromField(s.toString());
 
         }
+
         private boolean isSeparator(char a) {
             if (a == ':' || a == ',' || a == '.') return true;
             return false;
@@ -516,7 +534,7 @@ public class LimitsActivityController {
             if (btn.isChecked()) {
                 view.findViewById(R.id.btnAddProduct).setEnabled(false);
                 view.findViewById(R.id.spProduct).setEnabled(false);
-            }else{
+            } else {
                 view.findViewById(R.id.btnAddProduct).setEnabled(true);
                 view.findViewById(R.id.spProduct).setEnabled(true);
             }
@@ -579,34 +597,10 @@ public class LimitsActivityController {
                     model.updateCategories();
                     setAdapterCategories();
                     break;
-                default:
-                    //TODO obsługa błędu
-            }
-        }
-
-    }
-
-        private void handleMinimalaDataSetExceptions(Exception e) {
-            switch (e.getMessage()) {
-                case "Bad day field":
-                    toastError("Nie udało się przetworzyć dnia w dacie");
-                    break;
-                case "Bad month field":
-                    toastError("Nie udało się przetworzyć miesiąca w dacie");
-                    break;
-                case "Bad year field":
-                    toastError("Nie udało się przetworzyć roku w dacie");
-                    break;
-                case "separator":
-                    toastError("Nieprawdidłowy czas lub data");
-                    break;
-                case "No date":
-                    toastError("Brak daty");
-                    break;
-                default:
-                    toastError("Nieznany błąd");
             }
         }
     }
+
+}
 
 

@@ -77,8 +77,8 @@ public class AddCategoryPopupController {
                     if(!model.categoryExists()){
                         if(model.isMinimalDataSet()){
                             model.storeCategory(context);
-                            listener.dataUpdated(PopupWindowType.CATEGORY);
                             window.dismiss();
+                            listener.dataUpdated(PopupWindowType.CATEGORY);
                         }else{
                             toastError("Należy podać nazwę kategorii");
                         }
@@ -89,8 +89,8 @@ public class AddCategoryPopupController {
                 case "zachowaj":
                     if(model.isMinimalDataSet()){
                         model.updateCategory(context);
-                        listener.dataUpdated(PopupWindowType.CATEGORY);
                         window.dismiss();
+                        listener.dataUpdated(PopupWindowType.CATEGORY);
                     }
                     break;
             }

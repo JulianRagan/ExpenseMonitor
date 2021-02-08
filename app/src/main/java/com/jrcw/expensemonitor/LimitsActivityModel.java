@@ -194,6 +194,8 @@ public class LimitsActivityModel extends BasicModel{
    //     description = "";
     }
 
+    public void storeLimit() {
+    }
 }
 
 

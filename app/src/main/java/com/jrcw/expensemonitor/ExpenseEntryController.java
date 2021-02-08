@@ -21,11 +21,15 @@ import androidx.appcompat.widget.PopupMenu;
 
 import com.jrcw.expensemonitor.containers.Category;
 import com.jrcw.expensemonitor.containers.Currency;
+import com.jrcw.expensemonitor.containers.DetailContent;
+import com.jrcw.expensemonitor.containers.DetailEntryAction;
+import com.jrcw.expensemonitor.containers.EntryAction;
 import com.jrcw.expensemonitor.containers.Place;
 import com.jrcw.expensemonitor.containers.UpdateDataListener;
 import com.jrcw.expensemonitor.popupWindows.AddCategoryPopupController;
 import com.jrcw.expensemonitor.popupWindows.AddDetailPopupController;
 import com.jrcw.expensemonitor.popupWindows.AddPlacePopupController;
+import com.jrcw.expensemonitor.popupWindows.AddProductPopupController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +41,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class ExpenseEntryController {
     private ExpenseEntryActivity view;
     private ExpenseEntryModel model;
+    private DetailContent placeHolder;
 
     public ExpenseEntryController(ExpenseEntryActivity view, ExpenseEntryModel model) {
         this.view = view;
@@ -132,6 +137,9 @@ public class ExpenseEntryController {
             case DETAILS:
                 pview = inflater.inflate(R.layout.details_panel, null);
                 break;
+            case PRODUCT:
+                pview = inflater.inflate(R.layout.addition_products, null);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
         }
@@ -151,9 +159,14 @@ public class ExpenseEntryController {
                 cc.setUpdateDataListener(new PopupUpdateDataListener());
                 break;
             case DETAILS:
-                AddDetailPopupController dc = new AddDetailPopupController(pview, popupWindow, view,
-                        model.getTimeOfTransaction());
-                dc.setUpdateDataListener(new PopupUpdateDataListener());
+                AddDetailPopupController dc = new AddDetailPopupController(pview, v, popupWindow,
+                        view, model.getTimeOfTransaction());
+                dc.setDetailEntryAction(new DetailAction());
+                break;
+            case PRODUCT:
+                AddProductPopupController pc = new AddProductPopupController(pview, popupWindow, view,
+                        model.getCategories(), model.getUnits(), model.getProducts());
+                pc.setUpdateDataListener(new PopupUpdateDataListener());
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + pwt);
@@ -545,6 +558,26 @@ public class ExpenseEntryController {
         public void onNothingSelected(AdapterView<?> parent) {}
     }
 
+    private class DetailAction implements DetailEntryAction {
+
+        @Override
+        public void entryAction(EntryAction ea, DetailContent dc) {
+            switch (ea){
+                case ADD_PRODUCT:
+                    placeHolder = dc;
+                    showPopupWindow(PopupWindowType.PRODUCT, dc.getView());
+                    break;
+                case ADD_CATEGORY:
+                    placeHolder = dc;
+                    showPopupWindow(PopupWindowType.CATEGORY, dc.getView());
+                    break;
+                case END_ENTRY:
+                    placeHolder = null;
+                    clear();
+            }
+        }
+    }
+
     private class PopupUpdateDataListener implements UpdateDataListener{
 
         @Override
@@ -557,9 +590,12 @@ public class ExpenseEntryController {
                 case CATEGORY:
                     model.updateCategories();
                     setAdapterCategories();
+                    if(placeHolder != null){
+                        showPopupWindow(PopupWindowType.DETAILS, placeHolder.getView());
+                    }
                     break;
-                default:
-                    //TODO obsługa błędu
+                case PRODUCT:
+                    showPopupWindow(PopupWindowType.DETAILS, placeHolder.getView());
             }
         }
     }
