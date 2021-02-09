@@ -47,6 +47,7 @@ public class ExpenseEntryController {
         this.view = view;
         this.model = model;
         initControls();
+        Monitor.getInstance(view);
     }
 
     private void initControls(){
@@ -162,6 +163,7 @@ public class ExpenseEntryController {
                 AddDetailPopupController dc = new AddDetailPopupController(pview, v, popupWindow,
                         view, model.getTimeOfTransaction());
                 dc.setDetailEntryAction(new DetailAction());
+                if(placeHolder != null) dc.restoreFromDetailContent(placeHolder);
                 break;
             case PRODUCT:
                 AddProductPopupController pc = new AddProductPopupController(pview, popupWindow, view,

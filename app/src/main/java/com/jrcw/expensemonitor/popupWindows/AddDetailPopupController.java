@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.jrcw.expensemonitor.PopupWindowType;
@@ -49,6 +50,36 @@ public class AddDetailPopupController {
 
     public void setDetailEntryAction (DetailEntryAction action){
         this.action = action;
+    }
+
+
+    public void restoreFromDetailContent(DetailContent dc){
+        for(int i = 0; i < model.getCategories().size(); i++){
+            if(model.getCategories().get(i).getId() == dc.getCategoryId()){
+                ((Spinner)view.findViewById(R.id.spCategoryCostDetails)).setSelection(i);
+                break;
+            }
+        }
+        SpinnerAdapter adapter = ((Spinner)view.findViewById(R.id.spProducts)).getAdapter();
+        for(int i = 0; i < adapter.getCount(); i++){
+            Product p = (Product)adapter.getItem(i);
+            if( p.getId() == dc.getProductId()){
+                ((Spinner)view.findViewById(R.id.spProducts)).setSelection(i);
+                break;
+            }
+        }
+        for(int i = 0; i < model.getUnits().size(); i++){
+            if(model.getUnits().get(i).getId() == dc.getUnitId()){
+                ((Spinner)view.findViewById(R.id.spUnit)).setSelection(i);
+                break;
+            }
+        }
+        for(int i = 0; i < model.getCurrencies().size(); i++){
+            if(model.getCurrencies().get(i).getId() == dc.getUnitId()){
+                ((Spinner)view.findViewById(R.id.spCurrency)).setSelection(i);
+                break;
+            }
+        }
     }
 
     private void InitControls(){

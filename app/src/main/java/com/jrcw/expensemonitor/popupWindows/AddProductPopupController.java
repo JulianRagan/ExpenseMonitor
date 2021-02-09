@@ -15,6 +15,7 @@ import com.jrcw.expensemonitor.LimitsActivityController;
 import com.jrcw.expensemonitor.PopupWindowType;
 import com.jrcw.expensemonitor.R;
 import com.jrcw.expensemonitor.containers.Category;
+import com.jrcw.expensemonitor.containers.DetailContent;
 import com.jrcw.expensemonitor.containers.Product;
 import com.jrcw.expensemonitor.containers.UnitOfMeasure;
 import com.jrcw.expensemonitor.containers.UpdateDataListener;
@@ -30,8 +31,6 @@ public class AddProductPopupController {
 
     public AddProductPopupController(View view, PopupWindow w, Context c, List<Category> categories,
                                      List<UnitOfMeasure> units, List<Product> products) {
-
-
         this.view = view;
         this.model = new AddProductPopupModel(products, categories, units, context);
         this.window = w;

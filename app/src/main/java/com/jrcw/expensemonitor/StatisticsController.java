@@ -17,6 +17,7 @@ import androidx.appcompat.widget.PopupMenu;
 import com.jrcw.expensemonitor.popupWindows.AddCategoryPopupController;
 import com.jrcw.expensemonitor.popupWindows.AddDetailPopupController;
 import com.jrcw.expensemonitor.popupWindows.AddPlacePopupController;
+import com.jrcw.expensemonitor.popupWindows.SEDPopupController;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -102,6 +103,7 @@ public class StatisticsController {
         PopupWindow popupWindow = new PopupWindow(pview, width, height, focusable);
         switch(pwt){
             case STATS_EXPENSE_DISTR:
+                new SEDPopupController(pview, popupWindow, view, model);
                 break;
             case STATS_PRICE_VARIATION:
                 break;
