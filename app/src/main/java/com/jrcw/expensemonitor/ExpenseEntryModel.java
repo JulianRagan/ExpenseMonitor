@@ -147,18 +147,10 @@ public class ExpenseEntryModel extends BasicModel{
     }
 
     private String determineSeparator(String dateOrTime) throws Exception{
-        if(dateOrTime.contains(":")){
-            return ":";
-        }
-        if(dateOrTime.contains(".")){
-            return ".";
-        }
-        if(dateOrTime.contains("-")){
-            return "-";
-        }
-        if(dateOrTime.contains("/")){
-            return "/";
-        }
+        if(dateOrTime.contains(":")) return ":";
+        if(dateOrTime.contains(".")) return ".";
+        if(dateOrTime.contains("-")) return "-";
+        if(dateOrTime.contains("/")) return "/";
         throw new Exception("separator");
     }
 

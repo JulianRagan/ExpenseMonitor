@@ -27,19 +27,14 @@ import com.jrcw.expensemonitor.containers.Currency;
 import com.jrcw.expensemonitor.containers.Product;
 import com.jrcw.expensemonitor.containers.UpdateDataListener;
 import com.jrcw.expensemonitor.popupWindows.AddCategoryPopupController;
-import com.jrcw.expensemonitor.popupWindows.AddPlacePopupController;
 import com.jrcw.expensemonitor.popupWindows.AddProductPopupController;
-
-import java.sql.Date;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 
 public class LimitsActivityController {
-
     private LimitsActivity view;
     private LimitsActivityModel model;
-
 
     public LimitsActivityController(LimitsActivity view, LimitsActivityModel model) {
         this.view = view;
@@ -48,7 +43,6 @@ public class LimitsActivityController {
     }
 
     private void initView() {
-
         ((Button) view.findViewById(R.id.btnAddCategory)).setOnClickListener(new KategorieOnClickListener());
         ((Button) view.findViewById(R.id.btnAddProduct)).setOnClickListener(new ProduktyOnClickListener());
         ((CheckBox) view.findViewById(R.id.ckbCategory)).setOnClickListener(new CheckBoxListener());
@@ -56,18 +50,18 @@ public class LimitsActivityController {
         setAdapterCategories();
         ((Spinner) view.findViewById(R.id.spProduct)).setOnItemSelectedListener(new ProductsSelectedItemListener());
         setAdapterProducts();
-        ((SeekBar) view.findViewById(R.id.seekFundusze)).setOnSeekBarChangeListener(new FunduszeSeekBarListener());
         ((Spinner) view.findViewById(R.id.spCurrencyLimits)).setOnItemSelectedListener(new CurrencySelectedItemListener());
         setAdapterCurrencies();
+        ((SeekBar) view.findViewById(R.id.seekFundusze)).setOnSeekBarChangeListener(new FunduszeSeekBarListener());
         ((SeekBar) view.findViewById(R.id.seekSztuki)).setOnSeekBarChangeListener(new SztukiSeekBarListener());
         ((EditText) view.findViewById(R.id.etFunds)).addTextChangedListener(new FunduszeTextChangedListener());
         ((EditText) view.findViewById(R.id.etQuantity)).addTextChangedListener(new SztukiTextChangedListener());
         ((EditText) view.findViewById(R.id.etFrom)).addTextChangedListener(new OdEditTextListener());
         ((EditText) view.findViewById(R.id.etTo)).addTextChangedListener(new DoEditTextListener());
         ((Button) view.findViewById(R.id.btnSet)).setOnClickListener(new UstawOnClickListener());
-        ((Button) view.findViewById(R.id.btnCancel)).setOnClickListener(new EdytujOnClickListener());
+        ((Button) view.findViewById(R.id.btnCancel)).setOnClickListener(new CancelOnClickListener());
         ((Button) view.findViewById(R.id.btnFunction2)).setOnClickListener(new ButtonFunctionListener());
-
+        resetSeekBars();
     }
 
     private void setAdapterCategories() {
@@ -83,6 +77,21 @@ public class LimitsActivityController {
                 .getSelectedItem()).getName();
         ((Spinner) view.findViewById(R.id.spProduct)).setAdapter(
                 model.getProductsAdapter(view, categoryName));
+    }
+
+    private void resetSeekBars(){
+        Monitor m = Monitor.getInstance(view);
+        ((SeekBar) view.findViewById(R.id.seekFundusze)).setMax(m.getMaxQuota());
+        ((SeekBar) view.findViewById(R.id.seekSztuki)).setMax(m.getMaxQuantity());
+    }
+
+    private void clear(){
+        ((CheckBox) view.findViewById(R.id.ckbCategory)).setChecked(false);
+        ((EditText) view.findViewById(R.id.etFunds)).setText("0");
+        ((EditText) view.findViewById(R.id.etQuantity)).setText("0");
+        ((EditText) view.findViewById(R.id.etFrom)).setText("");
+        ((EditText) view.findViewById(R.id.etTo)).setText("");
+        resetSeekBars();
     }
 
     private void handleMinimalaDataSetExceptions(Exception e) {
@@ -104,6 +113,68 @@ public class LimitsActivityController {
                 break;
             default:
                 toastError("Nieznany błąd");
+        }
+    }
+
+    private boolean isSeparator(char a){
+        if(a == '-' || a == '/' || a == '.') return true;
+        return false;
+    }
+
+    private void checkDateString(Editable s){
+        String date = s.toString();
+        boolean dd = false;
+        boolean mm = false;
+        boolean yy = false;
+        char sep = 0;
+        int fsl = 0;
+
+        if(date.length() > 0) dd = true;
+        for(int i = 0; i < date.length(); i++){
+            char ch = date.charAt(i);
+            if(isSeparator(ch)){
+                if(dd && !mm){
+                    sep = ch;
+                    fsl = i;
+                    int day = Integer.parseInt(date.substring(0, i));
+                    if(day > 31){
+                        toastError("Miesiąc ma maksymalnie 31 dni");
+                        s.clear();
+                        break;
+                    }else if(day < 1){
+                        toastError("Miesiąc zaczyna się od 1-ego");
+                        s.clear();
+                        break;
+                    }else{
+                        mm = true;
+                    }
+                }else if(dd && mm){
+                    if(sep != ch){
+                        date.replace(ch, sep);
+                        s.clear();
+                        s.insert(0, date);
+                    }
+                    yy = true;
+                }else if(dd && mm && yy){
+                    s.clear();
+                    s.insert(0, date.substring(0, i-1));
+                    toastError("Niepoprawna data");
+                    break;
+                }
+            }
+            if(dd && mm && !yy){
+                if(i-1 > fsl) {
+                    int month = Integer.parseInt(date.substring(fsl+1, i+1));
+                    if (month > 12) {
+                        toastError("Rok ma maksymalnie 12 miesięcy");
+                    } else if (fsl - i == 2) {
+                        if (month < 1) toastError("Nieprawidłowy miesiąc");
+                        s.clear();
+                        s.insert(0, date.substring(0, fsl));
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -155,10 +226,6 @@ public class LimitsActivityController {
         popup.show();
     }
 
-    private void clear(){
-        ((CheckBox) view.findViewById(R.id.ckbCategory)).setOnClickListener(new CheckBoxListener());
-    }
-
     private class ActivitySwitch implements PopupMenu.OnMenuItemClickListener {
 
         @Override
@@ -205,7 +272,6 @@ public class LimitsActivityController {
         @Override
         public void onClick(View v) {
             showPopup(v, view);
-
         }
     }
 
@@ -221,7 +287,6 @@ public class LimitsActivityController {
 
     private class UstawOnClickListener implements View.OnClickListener {
 
-
         @Override
         public void onClick(View v) {
             try {
@@ -233,11 +298,10 @@ public class LimitsActivityController {
                 handleMinimalaDataSetExceptions(e);
             }
         }
-
     }
 
 
-    private class EdytujOnClickListener implements View.OnClickListener {
+    private class CancelOnClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -248,14 +312,10 @@ public class LimitsActivityController {
     private class SztukiTextChangedListener implements TextWatcher {
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -276,23 +336,16 @@ public class LimitsActivityController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 
     private class FunduszeTextChangedListener implements TextWatcher {
 
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -318,7 +371,6 @@ public class LimitsActivityController {
 
     private class FunduszeSeekBarListener implements SeekBar.OnSeekBarChangeListener {
 
-
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if (fromUser) {
@@ -333,18 +385,13 @@ public class LimitsActivityController {
         }
 
         @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
+        public void onStartTrackingTouch(SeekBar seekBar) {}
 
         @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
+        public void onStopTrackingTouch(SeekBar seekBar) {}
     }
 
     private class SztukiSeekBarListener implements SeekBar.OnSeekBarChangeListener {
-
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -359,90 +406,24 @@ public class LimitsActivityController {
         }
 
         @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
+        public void onStartTrackingTouch(SeekBar seekBar) {}
 
         @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
+        public void onStopTrackingTouch(SeekBar seekBar) {}
     }
 
     private class OdEditTextListener implements TextWatcher {
 
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {
-            String date = s.toString();
-            boolean dd = false;
-            boolean mm = false;
-            boolean yy = false;
-            char sep = 0;
-            int fsl = 0;
-
-            if (date.length() > 0) dd = true;
-            for (int i = 0; i < date.length(); i++) {
-                char ch = date.charAt(i);
-                if (isSeparator(ch)) {
-                    if (dd && !mm) {
-                        sep = ch;
-                        fsl = i;
-                        int day = Integer.parseInt(date.substring(0, i));
-                        if (day > 31) {
-                            toastError("Miesiąc ma maksymalnie 31 dni");
-                            s.clear();
-                            break;
-                        } else if (day < 1) {
-                            toastError("Miesiąc zaczyna się od 1-ego");
-                            s.clear();
-                            break;
-                        } else {
-                            mm = true;
-                        }
-                    } else if (dd && mm) {
-                        if (sep != ch) {
-                            date.replace(ch, sep);
-                            s.clear();
-                            s.insert(0, date);
-                        }
-                        yy = true;
-                    } else if (dd && mm && yy) {
-                        s.clear();
-                        s.insert(0, date.substring(0, i - 1));
-                        toastError("Niepoprawna data");
-                        break;
-                    }
-                }
-                if (dd && mm && !yy) {
-                    if (i - 1 > fsl) {
-                        int month = Integer.parseInt(date.substring(fsl + 1, i + 1));
-                        if (month > 12) {
-                            toastError("Rok ma maksymalnie 12 miesięcy");
-                        } else if (fsl - i == 2) {
-                            if (month < 1) toastError("Nieprawidłowy miesiąc");
-                            s.clear();
-                            s.insert(0, date.substring(0, fsl));
-                            break;
-                        }
-
-
-                    }
-                    model.setFromField(s.toString());
-
-                }
-
-            }
+            checkDateString(s);
+            model.setFromField(s.toString());
         }
 
         private boolean isSeparator(char a) {
@@ -453,7 +434,6 @@ public class LimitsActivityController {
 
     private class DoEditTextListener implements TextWatcher {
 
-
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -462,62 +442,8 @@ public class LimitsActivityController {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String date = s.toString();
-            boolean dd = false;
-            boolean mm = false;
-            boolean yy = false;
-            char sep = 0;
-            int fsl = 0;
-
-            if (date.length() > 0) dd = true;
-            for (int i = 0; i < date.length(); i++) {
-                char ch = date.charAt(i);
-                if (isSeparator(ch)) {
-                    if (dd && !mm) {
-                        sep = ch;
-                        fsl = i;
-                        int day = Integer.parseInt(date.substring(0, i));
-                        if (day > 31) {
-                            toastError("Miesiąc ma maksymalnie 31 dni");
-                            s.clear();
-                            break;
-                        } else if (day < 1) {
-                            toastError("Miesiąc zaczyna się od 1-ego");
-                            s.clear();
-                            break;
-                        } else {
-                            mm = true;
-                        }
-                    } else if (dd && mm) {
-                        if (sep != ch) {
-                            date.replace(ch, sep);
-                            s.clear();
-                            s.insert(0, date);
-                        }
-                        yy = true;
-                    } else if (dd && mm && yy) {
-                        s.clear();
-                        s.insert(0, date.substring(0, i - 1));
-                        toastError("Niepoprawna data");
-                        break;
-                    }
-                }
-                if (dd && mm && !yy) {
-                    if (i - 1 > fsl) {
-                        int month = Integer.parseInt(date.substring(fsl + 1, i + 1));
-                        if (month > 12) {
-                            toastError("Rok ma maksymalnie 12 miesięcy");
-                        } else if (fsl - i == 2) {
-                            if (month < 1) toastError("Nieprawidłowy miesiąc");
-                            s.clear();
-                            s.insert(0, date.substring(0, fsl));
-                            break;
-                        }
-                    }
-                }
-            }
+            checkDateString(s);
             model.setFromField(s.toString());
-
         }
 
         private boolean isSeparator(char a) {
@@ -550,9 +476,7 @@ public class LimitsActivityController {
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
     private class ProductsSelectedItemListener implements AdapterView.OnItemSelectedListener {
@@ -564,9 +488,7 @@ public class LimitsActivityController {
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
     private class CategorySelectedItemListener implements AdapterView.OnItemSelectedListener {
@@ -579,9 +501,7 @@ public class LimitsActivityController {
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
     private class PopupUpdateDataListener implements UpdateDataListener {
@@ -600,7 +520,6 @@ public class LimitsActivityController {
             }
         }
     }
-
 }
 
 
