@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -67,6 +68,7 @@ public class ExpenseEntryController {
         setAdapterCategories();
         ((Spinner)view.findViewById(R.id.spCurrency)).setOnItemSelectedListener(new CurrencySelectedItemListener());
         setAdapterCurrencies();
+        ((CheckBox)view.findViewById(R.id.detailLater)).setOnClickListener(new LaterOnClickListener());
     }
 
     private void setAdapterPlaces(){
@@ -192,6 +194,11 @@ public class ExpenseEntryController {
         ((EditText)view.findViewById(R.id.editTextTime)).setText("");
         ((EditText)view.findViewById(R.id.etAmount)).setText("");
         ((EditText)view.findViewById(R.id.etDescription)).setText("");
+        if(((CheckBox)view.findViewById(R.id.detailLater)).isChecked()){
+            ((CheckBox)view.findViewById(R.id.detailLater)).setChecked(false);
+            ((Button)view.findViewById(R.id.btnEnterDetail)).setEnabled(true);
+        }
+
     }
 
     private class ActivitySwitch implements PopupMenu.OnMenuItemClickListener{
@@ -258,6 +265,20 @@ public class ExpenseEntryController {
                 }
             } catch (Exception e) {
                 handleMinimalaDataSetExceptions(e);
+            }
+        }
+    }
+
+    private class LaterOnClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            boolean later = ((CheckBox)v).isChecked();
+            model.setLater(later);
+            if(later){
+                ((Button)view.findViewById(R.id.btnEnterDetail)).setEnabled(false);
+            }else{
+                ((Button)view.findViewById(R.id.btnEnterDetail)).setEnabled(true);
             }
         }
     }

@@ -7,6 +7,22 @@
     android:layout_height="match_parent"
     android:background="#3398f8">
 
+    <ListView
+        android:id="@+id/lvAdditionProduct"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvChooseCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </ListView>
+
     <Button
         android:id="@+id/btnAdditionProduct"
         android:layout_width="0dp"
@@ -37,7 +53,7 @@
     <EditText
         android:id="@+id/txtDescriptionProduct"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
@@ -45,6 +61,7 @@
         android:layout_marginRight="5dp"
         android:hint="@string/hintDescriptionProdukt"
         android:textSize="24sp"
+        android:maxLength="255"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDescriptionProduct" />
@@ -65,7 +82,7 @@
     <EditText
         android:id="@+id/txtProductName"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
@@ -73,6 +90,7 @@
         android:layout_marginRight="5dp"
         android:hint="@string/hintProductName"
         android:textSize="24sp"
+        android:maxLength="70"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -21,6 +21,7 @@ public class ExpenseEntryModel extends BasicModel{
     private int categoryId;
     private int currencyId;
     private int placeId;
+    private boolean later;
 
     public ExpenseEntryModel(Context context) {
         super(context);
@@ -56,6 +57,10 @@ public class ExpenseEntryModel extends BasicModel{
 
     public void setExpenditureTotal(double expenditureTotal) {
         this.expenditureTotal = expenditureTotal;
+    }
+
+    public void setLater(boolean later) {
+        this.later = later;
     }
 
     public Date getTimeOfTransaction() {
@@ -212,6 +217,9 @@ public class ExpenseEntryModel extends BasicModel{
         if(description != null){
             if(!description.contentEquals("")){
                 ib.addFieldAndData("Description", description, null);
+            }
+            if(later){
+                ib.addFieldAndData("LaterEnetry", 1, null);
             }
         }
         ib.addFieldAndData("Place_id", placeId, null);

@@ -2,6 +2,7 @@ package com.jrcw.expensemonitor;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -173,10 +174,21 @@ public class StatisticsModel extends BasicModel{
         throw new IllegalArgumentException("Bad category id");
     }
 
+    private List<Integer> getChartColors(){
+        int[] Colors = {Color.rgb(192,0,0), Color.rgb(255,0,0),
+                Color.rgb(255,192,0), Color.rgb(127,127,127),
+                Color.rgb(146,208,80), Color.rgb(0,176,80),
+                Color.rgb(79,129,189)};
+        ArrayList<Integer> retval = new ArrayList<Integer>();
+        for(int c: Colors) retval.add(c);
+
+        return retval;
+    }
+
     public PieData evaluateExpenseDistribution() throws Exception{
         parseDates();
         List<PieEntry> entries = new ArrayList<>();
-        double[] exppercat = new double[getCategories().size()];
+        double[] exppercat = new double[getCategories().size()+1];
         for(ExpenseDetail ed: details){
             if(ed.getExpenditureTime().after(from) && ed.getExpenditureTime().before(to)){
                 exppercat[ed.getCategoryId()] += ed.getAmount();
@@ -188,11 +200,12 @@ public class StatisticsModel extends BasicModel{
         }
         for(int i = 0; i < exppercat.length; i++){
             if(exppercat[i] > 0.0){
-                float f = (float)(exppercat[i]/sumForPeriod);
+                float f = ((float)(exppercat[i]/sumForPeriod))*100.0f;
                 entries.add(new PieEntry(f,getCategoryNameById(i)));
             }
         }
         PieDataSet pds = new PieDataSet(entries, "Podział wydatków na kategorie");
+        pds.setColors(getChartColors());
         return new PieData(pds);
     }
 }
