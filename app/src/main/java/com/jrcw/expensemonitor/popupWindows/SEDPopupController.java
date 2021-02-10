@@ -34,7 +34,6 @@ public class SEDPopupController {
         ((Button)view.findViewById(R.id.btnSEDClose)).setOnClickListener(new CloseOnClickListener());
         ((EditText)view.findViewById(R.id.etSEDFrom)).addTextChangedListener(new FromTextWatcher());
         ((EditText)view.findViewById(R.id.etSEDTo)).addTextChangedListener(new ToTextWatcher());
-        //((PieChart)view.findViewById(R.id.chart)).set
     }
 
     private void toastError(String msg){
@@ -129,7 +128,6 @@ public class SEDPopupController {
             case "Bad to date":
                 toastError("Nieprawidłowa data w polu do");
                 break;
-
             default:
                 toastError("Nieznany błąd");
                 e.printStackTrace();

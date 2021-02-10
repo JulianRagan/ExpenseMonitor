@@ -36,7 +36,9 @@ public class StatisticsController {
         ((Button)view.findViewById(R.id.btnChooseFunction)).setOnClickListener(new ChooseFunctionOnClickListener());
         ((Button)view.findViewById(R.id.btnDevisionExpense)).setOnClickListener(new DivisionExpenseOnClickListener());
         ((Button)view.findViewById(R.id.btnChangePrice)).setOnClickListener(new  ChangePriceOnClickListener());
+        ((Button)view.findViewById(R.id.btnChangePrice)).setEnabled(false);
         ((Button)view.findViewById(R.id.btnOverrun)).setOnClickListener(new OverrunOnClickListener());
+        ((Button)view.findViewById(R.id.btnOverrun)).setEnabled(false);
     }
 
     private void toastError(String msg){

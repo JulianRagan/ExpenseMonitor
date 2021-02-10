@@ -57,6 +57,8 @@
         android:layout_marginRight="65dp"
         android:hint="@string/hintLimitExceededReason"
         android:textSize="18sp"
+        android:maxLength="1000"
+        android:gravity="top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

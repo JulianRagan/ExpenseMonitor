@@ -110,4 +110,5 @@
     <string name="lblTo">Do</string>
     <string name="btnShow">Pokaż</string>
     <string name="btnClose">Zamknij</string>
+    <string name="ckbLater">Wprowadź szczegóły później</string>
 </resources>

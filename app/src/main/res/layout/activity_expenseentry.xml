@@ -229,7 +229,7 @@
         android:clipToPadding="true"
         android:fillViewport="true"
         android:scrollbarStyle="insideInset"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddExpense"
+        app:layout_constraintBottom_toTopOf="@+id/detailLater"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etAmount"
@@ -242,6 +242,8 @@
             android:ems="10"
             android:hint="@string/hintDescription"
             android:inputType="textMultiLine"
+            android:maxLength="255"
+            android:gravity="top"
             android:importantForAutofill="no" />
     </ScrollView>
 
@@ -269,5 +271,17 @@
         app:layout_constraintEnd_toEndOf="@+id/tvDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-  
+
+    <CheckBox
+        android:id="@+id/detailLater"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/ckbLater"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddExpense"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

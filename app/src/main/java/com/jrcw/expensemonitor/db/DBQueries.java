@@ -19,7 +19,6 @@ public class DBQueries {
                 "szt.'), (5, 'Litr', 'l'), (6, 'Kilogram', 'kg');\n");
         list.add("INSERT INTO Currency (id, Name, ISOCode, ExchangeRate) VALUES (1, 'Polski złoty" +
                 "', 'PLN', '1.000');\n");
-        list.add("INSERT INTO LimitMode (id, Type) VALUES (1, 'Sztukowy'), (2, 'Kwotowy');\n");
         list.add("INSERT INTO Preferences (DefaultEntryDelay, DefaultCurrency_id, DefaultExchange" +
                 "Rate, DefaultMaxForQuotaSlider, DefaultMaxForQuantitySlider) VALUES ('00:15:00'" +
                 ", 1, '1.000', 5000, 100);");
@@ -67,12 +66,6 @@ public class DBQueries {
                 "    ExchangeRate DECIMAL(10,3) NOT NULL,\n" +
                 "    PRIMARY KEY (id),\n" +
                 "    UNIQUE (Name, ISOCode)\n" +
-                ");\n");
-        list.add("CREATE TABLE LimitMode (\n" +
-                "    id INTEGER NOT NULL,\n" +
-                "    Type VARCHAR(20) NOT NULL,\n" +
-                "    PRIMARY KEY (id),\n" +
-                "    UNIQUE (Type)\n" +
                 ");\n");
         list.add("CREATE TABLE Overspend (\n" +
                 "    Limit_id INTEGER NOT NULL,\n" +
@@ -127,7 +120,6 @@ public class DBQueries {
                 "    EndDate DATE NOT NULL,\n" +
                 "    Product_id INTEGER,\n" +
                 "    Category_id INTEGER,\n" +
-                "    LimitMode_id INTEGER NOT NULL,\n" +
                 "    Quota DECIMAL(10,2) NOT NULL,\n" +
                 "    Currency_id INTEGER NOT NULL,\n" +
                 "    Quantity DECIMAL(10,3) NOT NULL,\n" +
@@ -135,7 +127,6 @@ public class DBQueries {
                 "    UNIQUE (Product_id, Category_id),\n" +
                 "    FOREIGN KEY(Product_id) REFERENCES Product(id),\n" +
                 "    FOREIGN KEY(Category_id) REFERENCES Category(id),\n" +
-                "    FOREIGN KEY(LimitMode_id) REFERENCES LimitMode(id),\n" +
                 "    FOREIGN KEY(Currency_id) REFERENCES Currency(id)\n" +
                 ");\n");
         return list;

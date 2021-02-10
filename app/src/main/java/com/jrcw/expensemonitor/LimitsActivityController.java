@@ -61,7 +61,7 @@ public class LimitsActivityController {
         ((Button) view.findViewById(R.id.btnSet)).setOnClickListener(new UstawOnClickListener());
         ((Button) view.findViewById(R.id.btnCancel)).setOnClickListener(new CancelOnClickListener());
         ((Button) view.findViewById(R.id.btnFunction2)).setOnClickListener(new ButtonFunctionListener());
-        resetSeekBars();
+        clear();
     }
 
     private void setAdapterCategories() {
@@ -108,11 +108,27 @@ public class LimitsActivityController {
             case "separator":
                 toastError("Nieprawdidłowy czas lub data");
                 break;
-            case "No date":
-                toastError("Brak daty");
+            case "No from date":
+                toastError("Brak daty od");
+                break;
+            case "No to date":
+                toastError("Brak daty do");
+                break;
+            case "Bad from date":
+                toastError("Nieprawidłowa data w polu od");
+                break;
+            case "Bad to date":
+                toastError("Nieprawidłowa data w polu do");
+                break;
+            case "Equal dates":
+                toastError("Daty są sobie równe");
+                break;
+            case "Limit has not been set":
+                toastError("Ustal jeden z limitów");
                 break;
             default:
                 toastError("Nieznany błąd");
+                break;
         }
     }
 
@@ -321,7 +337,6 @@ public class LimitsActivityController {
         public void afterTextChanged(Editable s) {
             try {
                 SeekBar seekbar = view.getSeekBarByName("Sztuki");
-
                 Integer Wal = Integer.parseInt(s.toString());
                 if (Wal > seekbar.getMax()) {
                     seekbar.setMax(Wal);
@@ -330,6 +345,10 @@ public class LimitsActivityController {
                     seekbar.setProgress(Wal);
                 }
                 model.setQuantity(Wal);
+                SeekBar as = view.getSeekBarByName("Fundusze");
+                if(as.getProgress() > 0){
+                    toastError("Ogranicz ilość lub fundusze");
+                }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
 
@@ -360,6 +379,10 @@ public class LimitsActivityController {
                     seekbar.setProgress(Wal);
                 }
                 model.setFunds(Wal);
+                SeekBar as = view.getSeekBarByName("Sztuki");
+                if(as.getProgress() > 0){
+                    toastError("Ogranicz ilość lub fundusze");
+                }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
 
@@ -425,11 +448,6 @@ public class LimitsActivityController {
             checkDateString(s);
             model.setFromField(s.toString());
         }
-
-        private boolean isSeparator(char a) {
-            if (a == ':' || a == ',' || a == '.') return true;
-            return false;
-        }
     }
 
     private class DoEditTextListener implements TextWatcher {
@@ -443,12 +461,7 @@ public class LimitsActivityController {
         @Override
         public void afterTextChanged(Editable s) {
             checkDateString(s);
-            model.setFromField(s.toString());
-        }
-
-        private boolean isSeparator(char a) {
-            if (a == ':' || a == ',' || a == '.') return true;
-            return false;
+            model.setToField(s.toString());
         }
     }
 
@@ -457,6 +470,7 @@ public class LimitsActivityController {
         @Override
         public void onClick(View v) {
             CompoundButton btn = (CompoundButton) view.findViewById(R.id.ckbCategory);
+            model.setOnlyCategory(btn.isChecked());
             if (btn.isChecked()) {
                 view.findViewById(R.id.btnAddProduct).setEnabled(false);
                 view.findViewById(R.id.spProduct).setEnabled(false);
