@@ -69,7 +69,7 @@ public class AddProductPopupModel {
     }
 
     public void clear(){
-        name = "";          //Co zrobic z zerowanie categoryId i unitId
+        name = "";
         description = "";
         product = null;
     }
@@ -85,6 +85,7 @@ public class AddProductPopupModel {
         }
         return false;
     }
+
     public boolean productExists() {
         boolean retval = false;
         if (name != null) {
@@ -98,6 +99,7 @@ public class AddProductPopupModel {
         }
         return retval;
     }
+
     public ArrayAdapter<Product> getProductAdapter(Context context, int categoryId){
         List<Product> filtr = new ArrayList<>();
         for (Product p:products){
@@ -113,6 +115,7 @@ public class AddProductPopupModel {
                 android.R.layout.simple_spinner_item, categories);
         return retval;
     }
+
     public ArrayAdapter<UnitOfMeasure> getUnitAdapter(Context context){
         ArrayAdapter<UnitOfMeasure> retval = new ArrayAdapter<>(context,
                 android.R.layout.simple_spinner_item, units);
@@ -129,6 +132,9 @@ public class AddProductPopupModel {
             }
             if(!description.contentEquals(product.getDescription())){
                 ub.addFieldAndData("Description", description, null);
+            }
+            if(unitId != product.getDefaultUnitId()){
+                ub.addFieldAndData("DefaultUnit_id", unitId, null);
             }
             dba.executeQuery(ub.getQry("WHERE id = " + product.getId() + ";"));
         }catch (Exception e){

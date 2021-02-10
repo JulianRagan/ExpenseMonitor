@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.jrcw.expensemonitor.LimitsActivityController;
@@ -47,6 +49,8 @@ public class AddProductPopupController {
         ((EditText) view.findViewById(R.id.txtDescriptionProduct)).addTextChangedListener(new  DescriptionTextChangeListener());
         ((Button) view.findViewById(R.id.btnAdditionProduct)).setOnClickListener(new AdditinonProductOnClickListener());
         ((Button) view.findViewById(R.id.btnCancelProduct)).setOnClickListener(new CancelOnClickListener());
+        ((ListView)view.findViewById(R.id.lvAdditionProduct)).setOnItemClickListener(new ProductOnItemListener());
+        setAdapterProduct();
 
     }
     private void setAdapterUnit(){
@@ -59,11 +63,38 @@ public class AddProductPopupController {
                 model.getCategoriesAdapter(context));
     }
 
+    private void setAdapterProduct(){
+        Category c = (Category)((Spinner)view.findViewById(R.id.spChooseCategory)).getSelectedItem();
+        ((ListView)view.findViewById(R.id.lvAdditionProduct)).setAdapter(
+                model.getProductAdapter(context, c.getId()));
+    }
+
+    private void importProduct(Product p){
+        model.populateFromProduct(p);
+        ((EditText) view.findViewById(R.id.txtProductName)).setText(p.getName());
+        ((EditText) view.findViewById(R.id.txtDescriptionProduct)).setText(p.getDescription());
+        ((Button) view.findViewById(R.id.btnAdditionProduct)).setText("Zachowaj");
+        ((Button) view.findViewById(R.id.btnCancelProduct)).setText("Odrzuć");
+        SpinnerAdapter adapter = ((Spinner)view.findViewById(R.id.spChooseUnit)).getAdapter();
+        for(int i = 0; i < adapter.getCount(); i++){
+            UnitOfMeasure m = (UnitOfMeasure)adapter.getItem(i);
+            if(m.getId() == p.getDefaultUnitId()){
+                ((Spinner)view.findViewById(R.id.spChooseUnit)).setSelection(i);
+                break;
+            }
+        }
+    }
+
+    private void clear(){
+        ((EditText) view.findViewById(R.id.txtProductName)).setText("");
+        ((EditText) view.findViewById(R.id.txtDescriptionProduct)).setText("");
+        ((Button) view.findViewById(R.id.btnAdditionProduct)).setText("Dodaj");
+        ((Button) view.findViewById(R.id.btnCancelProduct)).setText("Anuluj");
+    }
 
     public void setUpdateDataListener(UpdateDataListener listener) {
         this.listener = listener;
     }
-
 
     private class CategoryItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
@@ -71,13 +102,11 @@ public class AddProductPopupController {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             int cid = ((Category)parent.getItemAtPosition(position)).getId();
             model.setCategoryId(cid);
-
+            setAdapterProduct();
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
     private class UnitItemSelectedListener implements AdapterView.OnItemSelectedListener {
@@ -89,21 +118,16 @@ public class AddProductPopupController {
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
+        public void onNothingSelected(AdapterView<?> parent) {}
     }
 
     private class NameTextChangeListener implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -112,15 +136,12 @@ public class AddProductPopupController {
     }
 
     private class DescriptionTextChangeListener implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -130,6 +151,15 @@ public class AddProductPopupController {
 
     private void toastError(String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+    }
+
+    private class ProductOnItemListener implements AdapterView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Product p = (Product)parent.getItemAtPosition(position);
+            importProduct(p);
+        }
     }
 
     private class AdditinonProductOnClickListener implements View.OnClickListener {
@@ -159,7 +189,6 @@ public class AddProductPopupController {
                     }
                     break;
             }
-
         }
     }
 
@@ -170,13 +199,13 @@ public class AddProductPopupController {
             String mode = ((String) ((Button) v).getText()).toLowerCase();
             switch (mode) {
                 case "odrzuć":
+                    clear();
                     model.clear();
                     break;
                 case "anuluj":
                     window.dismiss();
                     break;
             }
-
         }
     }
 }

@@ -17,11 +17,11 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvChooseCategory"
+        app:layout_constraintBottom_toTopOf="@+id/tvProductName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </ListView>
+        app:layout_constraintTop_toBottomOf="@+id/spChooseCategory"
+        app:layout_constraintVertical_bias="0.0"></ListView>
 
     <Button
         android:id="@+id/btnAdditionProduct"
@@ -29,13 +29,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/btnAddProduct"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCancelProduct"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spChooseUnit" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
         android:id="@+id/spChooseUnit"
@@ -43,12 +43,12 @@
         android:layout_height="40dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdditionProduct"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvChooseUnit" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/txtDescriptionProduct"
@@ -56,15 +56,15 @@
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:hint="@string/hintDescriptionProdukt"
-        android:textSize="24sp"
         android:maxLength="255"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvChooseUnit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionProduct" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
         android:id="@+id/spChooseCategory"
@@ -85,16 +85,16 @@
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:hint="@string/hintProductName"
-        android:textSize="24sp"
         android:maxLength="70"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvDescriptionProduct"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnCancelProduct"
@@ -102,13 +102,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/btnCancelProduct"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnAdditionProduct"
-        app:layout_constraintTop_toBottomOf="@+id/spChooseUnit" />
+        app:layout_constraintTop_toTopOf="@+id/btnAdditionProduct" />
 
     <TextView
         android:id="@+id/tvChooseCategory"
@@ -122,7 +123,7 @@
         android:text="@string/lblChooseCategory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lvAddProduct" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvProductName"
@@ -130,13 +131,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/txtImplementName"
+        app:layout_constraintBottom_toTopOf="@+id/txtProductName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spChooseCategory" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvDescriptionProduct"
@@ -144,13 +145,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/lblDescriptionProducts"
+        app:layout_constraintBottom_toTopOf="@+id/txtDescriptionProduct"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtProductName" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvChooseUnit"
@@ -158,13 +159,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/txtChooseUnit"
+        app:layout_constraintBottom_toTopOf="@+id/spChooseUnit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDescriptionProduct" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
         android:id="@+id/lvAddProduct"
