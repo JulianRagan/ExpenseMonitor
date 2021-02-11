@@ -470,14 +470,12 @@ public class LimitsActivityController {
         @Override
         public void onClick(View v) {
             CompoundButton btn = (CompoundButton) view.findViewById(R.id.ckbCategory);
+            boolean enabled = !btn.isChecked();
             model.setOnlyCategory(btn.isChecked());
-            if (btn.isChecked()) {
-                view.findViewById(R.id.btnAddProduct).setEnabled(false);
-                view.findViewById(R.id.spProduct).setEnabled(false);
-            } else {
-                view.findViewById(R.id.btnAddProduct).setEnabled(true);
-                view.findViewById(R.id.spProduct).setEnabled(true);
-            }
+            view.findViewById(R.id.btnAddProduct).setEnabled(enabled);
+            view.findViewById(R.id.spProduct).setEnabled(enabled);
+            view.findViewById(R.id.seekSztuki).setEnabled(enabled);
+            view.findViewById(R.id.etQuantity).setEnabled(enabled);
         }
     }
 
